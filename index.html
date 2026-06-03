@@ -415,10 +415,15 @@
     backdrop-filter: blur(8px);
     border-bottom: 1px solid rgba(245,236,215,0.06);
     padding: 8px 2rem;
-    display: flex; align-items: center; gap: 1.5rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
     transition: border-color 0.4s;
-    will-change: transform;
     transform: translateZ(0);
+  }
+  .energy-left {
+    display: flex; align-items: center; gap: 1rem; flex: 1; min-width: 0;
+  }
+  .energy-right {
+    flex-shrink: 0;
   }
   #energy-bar-wrap.critical {
     border-bottom-color: rgba(180,30,30,0.6);
@@ -565,15 +570,16 @@
   @media (max-width: 640px) {
     /* Energy bar: stack vertically */
     #energy-bar-wrap {
-      flex-wrap: wrap;
-      gap: 6px 0.75rem;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 6px;
       padding: 8px 1rem;
     }
+    .energy-left { gap: 0.75rem; }
     .energy-label { display: none; }
-    .energy-track { flex: 1 1 auto; min-width: 80px; }
-    .energy-num { width: 28px; }
+    .energy-right { display: flex; }
     #kaffe-btn {
-      flex: 1 1 100%;
+      flex: 1;
       justify-content: center;
       font-size: 10px;
       letter-spacing: 0.08em;
@@ -661,12 +667,16 @@
 </div>
 
 <div id="energy-bar-wrap">
-  <span class="energy-label">Frank · Energi</span>
-  <div class="energy-track">
-    <div class="energy-fill" id="energy-fill"></div>
+  <div class="energy-left">
+    <span class="energy-label">Frank · Energi</span>
+    <div class="energy-track">
+      <div class="energy-fill" id="energy-fill"></div>
+    </div>
+    <span class="energy-num" id="energy-num">--</span>
   </div>
-  <span class="energy-num" id="energy-num">--</span>
-  <button id="kaffe-btn"><span class="btn-icon">☕</span>Gi Frank en kaffe før han sovner</button>
+  <div class="energy-right">
+    <button id="kaffe-btn"><span class="btn-icon">☕</span>Gi Frank en kaffe før han sovner</button>
+  </div>
 </div>
 
 <div class="critical-warning" id="critical-warning">
