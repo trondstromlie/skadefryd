@@ -1317,6 +1317,13 @@ console.log(`%c
   ║                                                                  ║
   ╚══════════════════════════════════════════════════════════════════╝
 `, 'color: #F5ECD7; background: #1A0E06; font-family: monospace; font-size: 11px; line-height: 1.4; padding: 8px;');
+
+// Console command for developers
+window.quote = function() {
+  const q = quotes[Math.floor(Math.random() * quotes.length)];
+  console.log(`%c\n  ☕ ${q.replace(/^"|"$/g, '')}\n     — Frank\n`, 'color: #C97B2A; font-family: monospace; font-size: 12px;');
+};
+console.log('%c  Skriv quote() for visdom fra Frank.', 'color: #C97B2A; opacity: 0.6; font-size: 10px;');
 </script>
 </body>
 </html>
