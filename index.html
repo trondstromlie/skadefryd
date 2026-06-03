@@ -89,8 +89,16 @@
     display: inline-block; width: 6px; height: 6px;
     border-radius: 50%; background: var(--rust);
     margin-right: 6px; animation: pulse 2s infinite;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .status-dot.awake {
+    background: var(--amber);
+    animation: pulse-fast 0.4s infinite;
+    transform: scale(1.8);
   }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  @keyframes pulse-fast { 0%,100%{opacity:1} 50%{opacity:0.5} }
 
   /* HERO */
   .hero {
@@ -715,7 +723,7 @@
   <header class="fade-up d1">
     <div class="stamp">Gjensidige · Skade · 2026</div>
     <div class="frank-status">
-      <span class="status-dot"></span>Frank er på kaffepause
+      <span class="status-dot" id="status-dot"></span><span id="status-text">Frank er på kaffepause</span>
     </div>
   </header>
 
@@ -1170,6 +1178,39 @@ setInterval(() => {
     el.style.opacity = '1';
   }, 500);
 }, 6000);
+
+// Frank's heartbeat
+const dot        = document.getElementById('status-dot');
+const statusText = document.getElementById('status-text');
+const wakeMessages = [
+  'Frank åpner ett øye',
+  'Frank registrerer deg',
+  'Frank ser deg. Han er ikke imponert.',
+  'Frank er teknisk sett våken',
+  'Frank legger merke til det. Nesten.',
+  'Frank er til stede. Mentalt et annet sted.',
+];
+let wakeIndex = 0;
+let wakeTimeout = null;
+
+dot.addEventListener('click', () => {
+  if (wakeTimeout) clearTimeout(wakeTimeout);
+
+  const msg = wakeMessages[wakeIndex % wakeMessages.length];
+  wakeIndex++;
+
+  dot.classList.add('awake');
+  statusText.textContent = msg;
+
+  currentEnergy = Math.min(100, currentEnergy + 3);
+  saveEnergy(currentEnergy);
+  renderEnergy();
+
+  wakeTimeout = setTimeout(() => {
+    dot.classList.remove('awake');
+    statusText.textContent = 'Frank er på kaffepause';
+  }, 3000);
+});
 </script>
 </body>
 </html>
