@@ -625,12 +625,13 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 120px;
+    height: 150px;
     pointer-events: none;
-    z-index: 4;
+    z-index: 100;
     opacity: 0;
-    transition: opacity 1.5s;
+    transition: opacity 1s;
     overflow: hidden;
+    background: linear-gradient(to top, rgba(26,14,6,0.95) 0%, transparent 100%);
   }
   #frank-eye.peeking {
     opacity: 1;
@@ -638,6 +639,7 @@
   #matrix-canvas {
     width: 100%;
     height: 100%;
+    display: block;
   }
 
   /* MOBILE */
@@ -1271,18 +1273,18 @@ function getEyeOpacity(x, y, w, h) {
   
   // Pupil in center
   const pupilDist = Math.sqrt(Math.pow(x - cx, 2) + Math.pow(y - cy, 2));
-  const pupilRadius = h * 0.15;
+  const pupilRadius = h * 0.18;
   
   if (pupilDist < pupilRadius) {
-    return 0.9; // Bright pupil
+    return 1; // Bright pupil
   } else if (dist < 1) {
     // Inside eye - brighter near edge
-    return 0.15 + (dist * 0.4);
-  } else if (dist < 1.3) {
+    return 0.3 + (dist * 0.5);
+  } else if (dist < 1.4) {
     // Eye outline
-    return 0.5;
+    return 0.7;
   }
-  return 0.08; // Outside eye - dim
+  return 0.15; // Outside eye - dim
 }
 
 function drawMatrix() {
