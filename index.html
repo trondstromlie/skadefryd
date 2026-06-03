@@ -417,6 +417,8 @@
     padding: 8px 2rem;
     display: flex; align-items: center; gap: 1.5rem;
     transition: border-color 0.4s;
+    will-change: transform;
+    transform: translateZ(0);
   }
   #energy-bar-wrap.critical {
     border-bottom-color: rgba(180,30,30,0.6);
@@ -446,7 +448,11 @@
   .energy-fill {
     height: 100%; border-radius: 2px;
     background: var(--amber);
-    transition: width 1s linear, background 0.5s;
+    width: 100%;
+    transform-origin: left;
+    transform: scaleX(1);
+    transition: transform 1s linear, background 0.5s;
+    will-change: transform;
   }
   .energy-fill.low { background: #c94040; }
   .energy-num {
@@ -1021,7 +1027,7 @@ function renderEnergy() {
   const warn = document.getElementById('critical-warning');
   const pct  = Math.max(0, Math.min(100, currentEnergy));
 
-  fill.style.width = pct + '%';
+  fill.style.transform = `scaleX(${pct / 100})`;
   num.textContent  = pct;
 
   if (pct === 0) { showBsod(); return; }
