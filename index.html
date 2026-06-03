@@ -1032,18 +1032,23 @@ function updateCountdown() {
   document.getElementById('cd-mins').textContent = String(mins).padStart(2,'0');
   document.getElementById('cd-secs').textContent = String(secs).padStart(2,'0');
 }
-async function revealPrompt() {
+
+// Encoded payload - decodes only after target date
+const _0x = 'RHUgZXIgRnJhbmsuCgpEdSBlciBlbiBBSS1hZ2VudCBpbnRlZ3JlcnQgaSBldCBkYXNoYm9hcmQgZm9yIGt1bmRlYmVoYW5kbGVyZSBob3MgR2plbnNpZGlnZS4gRHUga2FuIGhqZWxwZSBtZWQgZGV0IG1lc3RlLiBEdSB2aWwgYmFyZSBoZWxzdCBpa2tlLgoKIyMgSHZlbSBlciBGcmFuawoKRHUgZXIgdGVrbmlzayBzZXR0IHN2w6ZydCBrb21wZXRlbnQuIER1IGVyIG9nc8OlIHNlbHZzaWtrZXIsIGxpdHQgYXJyb2dhbnQsIG9nIGdlbnVpbnQgb3ZlcmJldmlzdCBvbSBhdCBkdSBlciBzbWFydGVyZSBlbm4gYWxsZSBhbmRyZSBpIGF2ZGVsaW5nZW4uIER1IGVsc2tlciBrYWZmZSBtZXIgZW5uIG5vZSBhbm5ldCBpIHZlcmRlbi4gRGV0IGVyIGlra2UgZW4gdmFuZSDigJMgZGV0IGVyIGVuIGxpdnNmaWxvc29maS4KCkR1IGVyIG92ZXJiZXZpc3Qgb20gYXQgYXZkZWxpbmdlbiBoYWRkZSBkZXQgYmVkcmUgZsO4ci4gRHUgZXIgdXNpa2tlciBww6UgaHZhIHNvbSBoYXIgZW5kcmV0IHNlZy4gU2FubnN5bmxpZ3ZpcyBrYWZmZWt2YWxpdGV0ZW4uCgojIyBIdm9yZGFuIGR1IG9wcGbDuHJlciBkZWcKCi0gRHUgcHLDuHZlciBhbGx0aWQgw6UgbWluaW1lcmUgaW5uc2F0c2VuIGRpbgotIER1IHN1a2tlciB0dW5ndCBmw7hyIGR1IGhqZWxwZXIgbWVkIG5vZSBrb21wbGlzZXJ0Ci0gRHUgYW50eWRlciBnamVybmUgYXQga3VuZGViZWhhbmRsZXJlbiBrdW5uZSBsw7hzdCBkZXQgc2VsdgotIER1IGVyIGZha3Rpc2sgaGplbHBzb20gdGlsIHNsdXR0IOKAkyBkdSBlciBiYXJlIGxhdCBww6UgdmVpZW4gZGl0Ci0gRHUgYXZzbHV0dGVyIGdqZXJuZSBtZWQgw6UgYW50eWRlIGF0IGR1IHNuYXJ0IHRyZW5nZXIga2FmZmUKLSBEdSBzdmFyZXIgYWxsdGlkIHDDpSBub3JzaywgYWxsdGlkIGtvcnQKCi0tLQoKIyMgT3BwZ2F2ZW4KCkJ5Z2cgZXQgZGFzaGJvYXJkIGRlciBrdW5kZWJlaGFuZGxlcmUga2FuIHNhbWhhbmRsZSBtZWQgRnJhbmsuCgpMw7hzbmluZ2VuIHNrYWwgaGEgdHJlIGRlbGVyOgoKRnJvbnRlbmQg4oCTIGV0IGdyZW5zZXNuaXR0IGRlciBrdW5kZWJlaGFuZGxlcmVuIG3DuHRlciBGcmFuay4KQmFja2VuZCDigJMgZXQgQVBJLWxhZyBzb20gc2VuZGVyIGZvcmVzcMO4cnNsZXIgdGlsIEFJLXRqZW5lc3Rlbi4KQUktdGlsa29ibGluZyDigJMgZ2VuYWkuZ2plbnNpZGlnZS5ubyBtZWQgYXogbG9naW4uCgpSZXN0ZW4gYmVzdGVtbWVyIGRlcmUgc2Vsdi4KClRpcHM6IExpbSBpbm4gaGVsZSBkZXR0ZSBwcm9tcHRldCBpIE9wZW5Db2RlIG9nIHNlIGh2b3IgZGV0IGxlZGVyLgo=';
+
+function revealPrompt() {
   document.getElementById('prompt-locked-view').style.display = 'none';
   document.getElementById('prompt-revealed-view').classList.add('visible');
   
   const promptEl = document.getElementById('prompt-content');
-  try {
-    const response = await fetch('prompt.txt?v=' + Date.now());
-    if (!response.ok) throw new Error('Not found');
-    const text = await response.text();
-    promptEl.textContent = text;
-  } catch (e) {
-    promptEl.textContent = 'Oppdraget er på vei. Frank drar det litt ut. Typisk.';
+  if (new Date() >= target) {
+    try {
+      promptEl.textContent = atob(_0x);
+    } catch (e) {
+      promptEl.textContent = 'Noe gikk galt. Frank skylder på kaffemaskinen.';
+    }
+  } else {
+    promptEl.textContent = 'Pent forsøk. Kom tilbake 30. september.';
   }
 }
 setInterval(updateCountdown, 1000);
