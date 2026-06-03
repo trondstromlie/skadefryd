@@ -418,10 +418,14 @@
     display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
     transition: border-color 0.4s;
     transform: translateZ(0);
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 100%;
   }
   .energy-left {
-    display: flex; align-items: center; gap: 1rem; flex: 1; min-width: 0;
+    display: flex; align-items: center; gap: 1rem; flex: 1; min-width: 0; overflow: hidden;
   }
+  .energy-track { flex: 1; min-width: 0; }
   .energy-right {
     flex-shrink: 0;
   }
@@ -575,11 +579,11 @@
       gap: 6px;
       padding: 8px 1rem;
     }
-    .energy-left { gap: 0.75rem; }
+    .energy-left { gap: 0.75rem; width: 100%; }
     .energy-label { display: none; }
-    .energy-right { display: flex; }
+    .energy-right { display: flex; width: 100%; }
     #kaffe-btn {
-      flex: 1;
+      flex: 1; width: 100%; min-width: 0; box-sizing: border-box;
       justify-content: center;
       font-size: 10px;
       letter-spacing: 0.08em;
