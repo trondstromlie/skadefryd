@@ -619,22 +619,13 @@
   .d3{animation-delay:0.4s} .d4{animation-delay:0.55s}
   .d5{animation-delay:0.7s} .d6{animation-delay:0.85s}
 
-  /* FRANK'S EYE - Matrix rain */
+  /* FRANK'S EYE - Matrix rain under footer */
   #frank-eye {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 150px;
+    position: relative;
+    width: 100%;
+    height: 50px;
     pointer-events: none;
-    z-index: 100;
-    opacity: 0;
-    transition: opacity 1s;
     overflow: hidden;
-    background: linear-gradient(to top, rgba(26,14,6,0.95) 0%, transparent 100%);
-  }
-  #frank-eye.peeking {
-    opacity: 1;
   }
   #matrix-canvas {
     width: 100%;
@@ -926,7 +917,7 @@
           <div class="prep-top">
             <span class="prep-icon">🙋</span>
             <div>
-              <div class="prep-name">Snakk med Trond eller Ulrik</div>
+              <div class="prep-name">Snakk med mine undersåtter Trond eller Ulrik</div>
               <span class="prep-tag">hjelp</span>
             </div>
           </div>
@@ -990,14 +981,14 @@
     </div>
   </section>
 
-  <div id="frank-eye">
-    <canvas id="matrix-canvas"></canvas>
-  </div>
-
   <footer class="fade-up d6">
     <div class="footer-text">© 2026 Gjensidige · Skade · Frank-hackathon</div>
     <div class="footer-frank">"Jeg tok ikke ansvar for dette arrangementet. Det er viktig at det kommer frem." — Frank</div>
   </footer>
+
+  <div id="frank-eye">
+    <canvas id="matrix-canvas"></canvas>
+  </div>
 
 </div>
 
@@ -1075,7 +1066,7 @@ updateCountdown();
 if (new Date() >= target) revealPrompt();
 
 // Energy monitor
-const DRAIN_INTERVAL = 8000;   // drain 1 point every 8 sec
+const DRAIN_INTERVAL = 1000;   // drain 1 point every second
 const COFFEE_BOOST   = 25;
 const CRITICAL_LEVEL = 20;
 
@@ -1096,6 +1087,7 @@ function saveEnergy(val) {
 }
 
 let currentEnergy = getEnergy();
+saveEnergy(currentEnergy); // Save the calculated energy on load
 
 function showBsod() {
   document.getElementById('bsod').classList.add('show');
@@ -1262,29 +1254,38 @@ function initMatrix() {
 // Eye shape detection - returns opacity based on distance from eye shape
 function getEyeOpacity(x, y, w, h) {
   const cx = w / 2;
-  const cy = h * 0.4;
-  const eyeWidth = w * 0.35;
-  const eyeHeight = h * 0.5;
+  const cy = h * 0.5;
   
-  // Ellipse equation for eye shape
+  // Eye dimensions
+  const eyeWidth = w * 0.25;
+  const eyeHeight = h * 0.8;
+  
+  // Normalized position
   const dx = (x - cx) / eyeWidth;
   const dy = (y - cy) / eyeHeight;
   const dist = dx * dx + dy * dy;
   
-  // Pupil in center
+  // Pupil
   const pupilDist = Math.sqrt(Math.pow(x - cx, 2) + Math.pow(y - cy, 2));
-  const pupilRadius = h * 0.18;
+  const pupilRadius = h * 0.15;
+  const irisRadius = h * 0.3;
+  
+  // Eye outline thickness
+  const outlineInner = 0.85;
+  const outlineOuter = 1.1;
   
   if (pupilDist < pupilRadius) {
-    return 1; // Bright pupil
-  } else if (dist < 1) {
-    // Inside eye - brighter near edge
-    return 0.3 + (dist * 0.5);
-  } else if (dist < 1.4) {
-    // Eye outline
-    return 0.7;
+    return 1; // Pupil - solid
+  } else if (pupilDist < irisRadius) {
+    return 0.8; // Iris
+  } else if (dist > outlineInner && dist < outlineOuter) {
+    // Eye outline - the actual eye shape border
+    return 1;
+  } else if (dist < outlineInner) {
+    // Inside eye
+    return 0.15;
   }
-  return 0.15; // Outside eye - dim
+  return 0.08; // Outside eye - subtle matrix rain
 }
 
 function drawMatrix() {
@@ -1313,22 +1314,15 @@ function drawMatrix() {
   requestAnimationFrame(drawMatrix);
 }
 
-window.addEventListener('scroll', () => {
-  const nearBottom = window.scrollY + window.innerHeight >= document.body.scrollHeight - 80;
-  frankEye.classList.toggle('peeking', nearBottom);
-  
-  if (nearBottom && !matrixActive) {
-    matrixActive = true;
-    initMatrix();
-    drawMatrix();
-  } else if (!nearBottom) {
-    matrixActive = false;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
-}, { passive: true });
+// Start matrix automatically
+setTimeout(() => {
+  initMatrix();
+  matrixActive = true;
+  drawMatrix();
+}, 500);
 
 window.addEventListener('resize', () => {
-  if (matrixActive) initMatrix();
+  initMatrix();
 });
 
 // Frank's heartbeat
