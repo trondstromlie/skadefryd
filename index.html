@@ -359,6 +359,81 @@
     font-size: 11px; color: var(--amber); opacity: 0.5;
   }
 
+  /* ENERGY BAR */
+  #energy-bar-wrap {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(26,14,6,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(245,236,215,0.06);
+    padding: 8px 2rem;
+    display: flex; align-items: center; gap: 1.5rem;
+    transition: border-color 0.4s;
+  }
+  #energy-bar-wrap.critical {
+    border-bottom-color: rgba(180,30,30,0.6);
+    animation: critpulse 1.5s infinite;
+  }
+  @keyframes critpulse {
+    0%,100% { box-shadow: none; }
+    50% { box-shadow: 0 2px 20px rgba(180,30,30,0.25); }
+  }
+  body.critical-mode::before {
+    outline: 3px solid rgba(180,30,30,0.4);
+    animation: bodyflash 1.5s infinite;
+  }
+  @keyframes bodyflash {
+    0%,100%{opacity:0.4} 50%{opacity:1}
+  }
+  .energy-label {
+    font-size: 9px; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--amber);
+    opacity: 0.6; white-space: nowrap; flex-shrink: 0;
+  }
+  .energy-track {
+    flex: 1; height: 4px;
+    background: rgba(245,236,215,0.06);
+    border-radius: 2px; overflow: hidden;
+  }
+  .energy-fill {
+    height: 100%; border-radius: 2px;
+    background: var(--amber);
+    transition: width 1s linear, background 0.5s;
+  }
+  .energy-fill.low { background: #c94040; }
+  .energy-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; color: var(--amber);
+    min-width: 36px; text-align: right; flex-shrink: 0;
+    transition: color 0.5s;
+  }
+  .energy-num.low { color: #c94040; }
+  #kaffe-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: none; border: 1px solid rgba(201,123,42,0.35);
+    color: var(--amber); padding: 5px 12px;
+    cursor: pointer; flex-shrink: 0;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  #kaffe-btn:hover { background: rgba(201,123,42,0.1); border-color: var(--amber); }
+  #kaffe-btn:active { transform: scale(0.97); }
+  .critical-warning {
+    position: fixed; top: 42px; left: 0; right: 0;
+    z-index: 999;
+    background: rgba(140,20,20,0.85);
+    backdrop-filter: blur(4px);
+    text-align: center;
+    padding: 6px 2rem;
+    font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #ffd0d0;
+    display: none;
+    animation: critpulse 1.5s infinite;
+  }
+  .critical-warning.show { display: block; }
+  .page { padding-top: 44px; }
+
   /* ANIMATE IN */
   .fade-up {
     opacity: 0; transform: translateY(20px);
@@ -390,6 +465,19 @@
 <body>
 
 <div class="cursor" id="cursor"></div>
+
+<div id="energy-bar-wrap">
+  <span class="energy-label">Frank · Energi</span>
+  <div class="energy-track">
+    <div class="energy-fill" id="energy-fill"></div>
+  </div>
+  <span class="energy-num" id="energy-num">--</span>
+  <button id="kaffe-btn">☕ Kaffe registrert</button>
+</div>
+
+<div class="critical-warning" id="critical-warning">
+  ⚠ Frank er kaffekritisk — tilnærm med forsiktighet
+</div>
 
 <div class="steam-container" id="steam"></div>
 
@@ -636,6 +724,66 @@ updateCountdown();
 
 // Check if already past reveal time
 if (new Date() >= target) revealPrompt();
+
+// Energy monitor
+const DRAIN_INTERVAL = 8000;   // drain 1 point every 8 sec
+const COFFEE_BOOST   = 25;
+const CRITICAL_LEVEL = 20;
+
+function getEnergy() {
+  const stored = localStorage.getItem('frank_energy');
+  const ts     = localStorage.getItem('frank_energy_ts');
+  let energy   = stored !== null ? parseFloat(stored) : 72;
+  if (ts) {
+    const elapsed = (Date.now() - parseInt(ts)) / 1000;
+    energy = Math.max(0, energy - Math.floor(elapsed / (DRAIN_INTERVAL / 1000)));
+  }
+  return Math.round(energy);
+}
+
+function saveEnergy(val) {
+  localStorage.setItem('frank_energy', val);
+  localStorage.setItem('frank_energy_ts', Date.now());
+}
+
+let currentEnergy = getEnergy();
+
+function renderEnergy() {
+  const fill = document.getElementById('energy-fill');
+  const num  = document.getElementById('energy-num');
+  const bar  = document.getElementById('energy-bar-wrap');
+  const warn = document.getElementById('critical-warning');
+  const pct  = Math.max(0, Math.min(100, currentEnergy));
+
+  fill.style.width = pct + '%';
+  num.textContent  = pct;
+
+  const isCritical = pct <= CRITICAL_LEVEL;
+  fill.classList.toggle('low',  isCritical);
+  num.classList.toggle('low',   isCritical);
+  bar.classList.toggle('critical', isCritical);
+  warn.classList.toggle('show', isCritical);
+  document.body.classList.toggle('critical-mode', isCritical);
+}
+
+renderEnergy();
+
+setInterval(() => {
+  if (currentEnergy > 0) {
+    currentEnergy = Math.max(0, currentEnergy - 1);
+    saveEnergy(currentEnergy);
+    renderEnergy();
+  }
+}, DRAIN_INTERVAL);
+
+document.getElementById('kaffe-btn').addEventListener('click', () => {
+  currentEnergy = Math.min(100, currentEnergy + COFFEE_BOOST);
+  saveEnergy(currentEnergy);
+  renderEnergy();
+  const btn = document.getElementById('kaffe-btn');
+  btn.textContent = '☕ Registrert';
+  setTimeout(() => { btn.textContent = '☕ Kaffe registrert'; }, 1200);
+});
 
 // Frank quote rotator
 const quotes = [
