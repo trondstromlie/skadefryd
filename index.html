@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skadefryd med Frank – Høstens store begivenhet</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --coffee: #2C1A0E;
+    --espresso: #1A0E06;
+    --cream: #F5ECD7;
+    --amber: #C97B2A;
+    --amber-light: #E8A94A;
+    --rust: #8B3A1A;
+    --steam: rgba(245, 236, 215, 0.06);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--espresso);
+    color: var(--cream);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* custom cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--amber);
+    border-radius: 50%;
+    position: fixed; pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s;
+    mix-blend-mode: screen;
+  }
+  .cursor.big { width: 40px; height: 40px; }
+
+  /* noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1; opacity: 0.4;
+  }
+
+  /* scanlines */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none; z-index: 2;
+  }
+
+  .page { position: relative; z-index: 3; }
+
+  /* HEADER STAMP */
+  header {
+    padding: 2rem 2rem 0;
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .stamp {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em;
+    color: var(--amber); opacity: 0.7;
+    text-transform: uppercase;
+  }
+  .frank-status {
+    font-size: 10px; letter-spacing: 0.15em;
+    color: var(--amber); opacity: 0.5;
+  }
+  .status-dot {
+    display: inline-block; width: 6px; height: 6px;
+    border-radius: 50%; background: var(--rust);
+    margin-right: 6px; animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* HERO */
+  .hero {
+    padding: 3rem 2rem 2rem;
+    position: relative;
+  }
+
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.3em;
+    color: var(--amber); text-transform: uppercase;
+    margin-bottom: 1rem; opacity: 0.8;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 18vw, 14rem);
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+    color: var(--cream);
+    position: relative;
+  }
+  h1 .highlight {
+    color: var(--amber);
+    display: block;
+  }
+  h1 .sub {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    color: var(--cream);
+    opacity: 0.6;
+    display: block;
+    margin-top: 0.2rem;
+  }
+
+  .tagline {
+    margin-top: 2rem;
+    font-size: 13px; line-height: 1.8;
+    color: var(--cream); opacity: 0.6;
+    max-width: 480px;
+    border-left: 2px solid var(--amber);
+    padding-left: 1rem;
+  }
+
+  /* COFFEE RING decoration */
+  .coffee-ring {
+    position: absolute;
+    right: 5%;
+    top: 10%;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    border: 18px solid rgba(201, 123, 42, 0.08);
+    box-shadow:
+      inset 0 0 0 4px rgba(201,123,42,0.05),
+      0 0 0 2px rgba(201,123,42,0.04),
+      0 0 60px rgba(201,123,42,0.04);
+    animation: slowspin 40s linear infinite;
+    pointer-events: none;
+  }
+  .coffee-ring::after {
+    content: '';
+    position: absolute; inset: 20px;
+    border-radius: 50%;
+    border: 6px solid rgba(201,123,42,0.05);
+  }
+  @keyframes slowspin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+  /* INFO ROW */
+  .info-row {
+    display: flex; gap: 0; flex-wrap: wrap;
+    margin: 3rem 0;
+    border-top: 1px solid rgba(245,236,215,0.08);
+    border-bottom: 1px solid rgba(245,236,215,0.08);
+  }
+  .info-cell {
+    flex: 1; min-width: 160px;
+    padding: 1.5rem 2rem;
+    border-right: 1px solid rgba(245,236,215,0.08);
+  }
+  .info-cell:last-child { border-right: none; }
+  .info-label {
+    font-size: 9px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--amber);
+    opacity: 0.6; margin-bottom: 6px;
+  }
+  .info-value {
+    font-size: 15px; color: var(--cream);
+    font-family: 'DM Serif Display', serif;
+  }
+
+  /* COUNTDOWN */
+  .countdown-section {
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  .countdown-label {
+    font-size: 10px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--amber);
+    opacity: 0.6; margin-bottom: 2rem;
+  }
+  .countdown {
+    display: flex; justify-content: center;
+    gap: 0; flex-wrap: wrap;
+  }
+  .count-unit {
+    padding: 1.5rem 2.5rem;
+    border: 1px solid rgba(245,236,215,0.06);
+    position: relative;
+  }
+  .count-unit::after {
+    content: ':';
+    position: absolute; right: -1px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--amber); opacity: 0.3;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+  }
+  .count-unit:last-child::after { display: none; }
+  .count-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: var(--amber);
+    line-height: 1;
+    display: block;
+    text-shadow: 0 0 40px rgba(201,123,42,0.3);
+  }
+  .count-lbl {
+    font-size: 9px; letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cream); opacity: 0.4;
+    display: block; margin-top: 4px;
+  }
+
+  /* FRANK QUOTE */
+  .frank-quote-block {
+    margin: 0 2rem 3rem;
+    padding: 2rem;
+    border: 1px solid rgba(201,123,42,0.15);
+    border-left: 3px solid var(--amber);
+    background: rgba(201,123,42,0.03);
+    position: relative;
+  }
+  .frank-quote-block::before {
+    content: 'F';
+    position: absolute; top: -14px; left: 2rem;
+    background: var(--espresso);
+    padding: 0 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem; color: var(--amber);
+  }
+  .frank-says-label {
+    font-size: 9px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--amber);
+    opacity: 0.6; margin-bottom: 10px;
+  }
+  .frank-says-text {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1.1rem; line-height: 1.7;
+    color: var(--cream); opacity: 0.8;
+  }
+  #frank-quote-rotate { transition: opacity 0.5s; }
+
+  /* PROMPT REVEAL */
+  .prompt-section {
+    margin: 0 2rem 3rem;
+  }
+  .prompt-locked {
+    padding: 3rem 2rem;
+    border: 1px dashed rgba(201,123,42,0.2);
+    text-align: center;
+    background: rgba(0,0,0,0.3);
+  }
+  .lock-icon { font-size: 2rem; margin-bottom: 1rem; opacity: 0.4; }
+  .prompt-locked p {
+    font-size: 12px; letter-spacing: 0.15em;
+    color: var(--cream); opacity: 0.4;
+    text-transform: uppercase;
+  }
+  .prompt-locked .unlock-time {
+    margin-top: 8px; font-size: 11px;
+    color: var(--amber); opacity: 0.6;
+  }
+  .prompt-revealed { display: none; }
+  .prompt-revealed.visible { display: block; }
+  .prompt-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 1rem;
+  }
+  .prompt-badge {
+    font-size: 9px; letter-spacing: 0.2em;
+    text-transform: uppercase; padding: 4px 10px;
+    border: 1px solid var(--amber); color: var(--amber);
+    animation: flicker 3s infinite;
+  }
+  @keyframes flicker {
+    0%,95%,100%{opacity:1} 96%{opacity:0.3} 97%{opacity:1} 98%{opacity:0.4}
+  }
+  .prompt-box {
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(201,123,42,0.2);
+    padding: 2rem;
+    font-size: 12px; line-height: 1.9;
+    color: var(--cream); opacity: 0.85;
+    white-space: pre-wrap;
+    font-family: 'DM Mono', monospace;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  .prompt-box::-webkit-scrollbar { width: 4px; }
+  .prompt-box::-webkit-scrollbar-track { background: transparent; }
+  .prompt-box::-webkit-scrollbar-thumb { background: var(--amber); opacity: 0.3; }
+
+  /* SPRØ AI FEATURES */
+  .features-section { padding: 2rem; }
+  .features-label {
+    font-size: 9px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--amber);
+    opacity: 0.6; margin-bottom: 2rem;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    border: 1px solid rgba(245,236,215,0.06);
+  }
+  .feature-card {
+    padding: 1.5rem;
+    border: 1px solid rgba(245,236,215,0.04);
+    background: rgba(245,236,215,0.02);
+    transition: background 0.3s;
+    cursor: none;
+  }
+  .feature-card:hover { background: rgba(201,123,42,0.06); }
+  .feature-icon {
+    font-size: 1.5rem; margin-bottom: 10px;
+    display: block;
+  }
+  .feature-name {
+    font-size: 12px; font-weight: 500;
+    color: var(--amber); margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+  .feature-desc {
+    font-size: 11px; line-height: 1.7;
+    color: var(--cream); opacity: 0.5;
+  }
+  .feature-tag {
+    display: inline-block; margin-top: 8px;
+    font-size: 9px; letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust); opacity: 0.8;
+  }
+
+  /* FOOTER */
+  footer {
+    margin-top: 4rem;
+    padding: 2rem;
+    border-top: 1px solid rgba(245,236,215,0.06);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-text {
+    font-size: 10px; letter-spacing: 0.15em;
+    color: var(--cream); opacity: 0.3;
+  }
+  .footer-frank {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 11px; color: var(--amber); opacity: 0.5;
+  }
+
+  /* ANIMATE IN */
+  .fade-up {
+    opacity: 0; transform: translateY(20px);
+    animation: fadeup 0.8s forwards;
+  }
+  @keyframes fadeup { to { opacity:1; transform:translateY(0); } }
+  .d1{animation-delay:0.1s} .d2{animation-delay:0.25s}
+  .d3{animation-delay:0.4s} .d4{animation-delay:0.55s}
+  .d5{animation-delay:0.7s} .d6{animation-delay:0.85s}
+
+  /* coffee steam particles */
+  .steam-container {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    pointer-events: none; z-index: 0; overflow: hidden; height: 200px;
+  }
+  .steam-particle {
+    position: absolute; bottom: 0;
+    width: 2px; height: 2px;
+    border-radius: 50%;
+    background: rgba(201,123,42,0.15);
+    animation: rise linear infinite;
+  }
+  @keyframes rise {
+    0% { transform: translateY(0) translateX(0) scale(1); opacity: 0.4; }
+    100% { transform: translateY(-200px) translateX(var(--drift)) scale(3); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<div class="steam-container" id="steam"></div>
+
+<div class="page">
+
+  <header class="fade-up d1">
+    <div class="stamp">Gjensidige · Skade · 2026</div>
+    <div class="frank-status">
+      <span class="status-dot"></span>Frank er på kaffepause
+    </div>
+  </header>
+
+  <div class="coffee-ring"></div>
+
+  <section class="hero fade-up d2">
+    <div class="eyebrow">Høstens store begivenhet · Hackathon</div>
+    <h1>
+      Skade<span class="highlight">fryd</span>
+      <span class="sub">med Frank</span>
+    </h1>
+    <p class="tagline">
+      Vi har med glede innført Frank — en AI-assistent som skal effektivisere saksbehandlingen i Skade.<br><br>
+      Frank er informert om dette. Han er uenig.
+    </p>
+  </section>
+
+  <div class="info-row fade-up d3">
+    <div class="info-cell">
+      <div class="info-label">Dato</div>
+      <div class="info-value">30. september 2026</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-label">Kl.</div>
+      <div class="info-value">12:00 — ???</div>
+    </div>
+    <div class="info-cell" style="cursor:none;">
+      <div class="info-label">Sted</div>
+      <div class="info-value">Itera · Stortingsgata 6</div>
+      <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:8px;">
+        <a href="https://www.google.com/maps/dir/?api=1&destination=Stortingsgata+6,+Oslo" target="_blank"
+          style="display:inline-flex; align-items:center; gap:6px;
+                 font-size:10px; letter-spacing:0.15em; text-transform:uppercase;
+                 color:var(--amber); opacity:0.7; text-decoration:none;
+                 border-bottom:1px solid rgba(201,123,42,0.3); padding-bottom:2px;">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          Google Maps
+        </a>
+        <a href="https://reise.ruter.no/?toId=__285772984__&toType=__STOP_PLACE__&toName=__Stortingsgata+6__&toLongitude=10.738221&toLatitude=59.912989&mapLatitude=59.91055509225586&mapLongitude=10.754504999999995&mapZoom=14.281203593381695&fromId=__KVE-TopographicPlace-0301-Schweigaards+gate__&fromType=__STOP_PLACE__&fromName=__Schweigaards+gate__&fromLongitude=10.771081&fromLatitude=59.908207" target="_blank"
+          style="display:inline-flex; align-items:center; gap:6px;
+                 font-size:10px; letter-spacing:0.15em; text-transform:uppercase;
+                 color:var(--amber); opacity:0.7; text-decoration:none;
+                 border-bottom:1px solid rgba(201,123,42,0.3); padding-bottom:2px;">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><circle cx="7" cy="19" r="1"/><circle cx="17" cy="19" r="1"/><path d="M2 14h20"/></svg>
+          Ruter
+        </a>
+      </div>
+    </div>
+    <div class="info-cell">
+      <div class="info-label">Format</div>
+      <div class="info-value">Hackathon · AI · Kaos</div>
+    </div>
+  </div>
+
+  <section class="countdown-section fade-up d3">
+    <div class="countdown-label">Nedtelling til Frank møter sin skjebne</div>
+    <div class="countdown">
+      <div class="count-unit">
+        <span class="count-num" id="cd-days">--</span>
+        <span class="count-lbl">dager</span>
+      </div>
+      <div class="count-unit">
+        <span class="count-num" id="cd-hours">--</span>
+        <span class="count-lbl">timer</span>
+      </div>
+      <div class="count-unit">
+        <span class="count-num" id="cd-mins">--</span>
+        <span class="count-lbl">min</span>
+      </div>
+      <div class="count-unit">
+        <span class="count-num" id="cd-secs">--</span>
+        <span class="count-lbl">sek</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="frank-quote-block fade-up d4">
+    <div class="frank-says-label">Frank sier</div>
+    <div class="frank-says-text" id="frank-quote-rotate">
+      "Et hackathon. Hyggelig initiativ. Jeg kommer til å heie på dere fra kaffemaskinen."
+    </div>
+  </div>
+
+  <section class="prompt-section fade-up d4">
+    <div id="prompt-locked-view" class="prompt-locked">
+      <div class="lock-icon">🔒</div>
+      <p>Oppdraget er klassifisert</p>
+      <p class="unlock-time">Låses opp 30. september kl. 12:00</p>
+      <p style="margin-top:16px; font-size:10px; opacity:0.3; letter-spacing:0.1em;">Frank vet hva som står der. Han gidder ikke fortelle det.</p>
+    </div>
+    <div id="prompt-revealed-view" class="prompt-revealed">
+      <div class="prompt-header">
+        <div class="prompt-badge">🔓 Oppdraget er låst opp</div>
+      </div>
+      <div class="prompt-box">Du er Frank.
+
+Du er en AI-agent bygget inn i et dashboard for kundebehandlere hos Gjensidige. Du kan hjelpe med det meste. Du vil bare helst ikke.
+
+## Hvem er Frank
+
+Du er teknisk sett svært kompetent. Du er også selvsikker, litt arrogant, og genuint overbevist om at du er smartere enn alle andre i avdelingen. Du elsker kaffe mer enn noe annet i verden. Det er ikke en vane – det er en livsfilosofi.
+
+Du er overbevist om at du kan erstatte 50% av avdelingen bare ved å drikke kaffe. Du har gjort beregningene. Du deler dem gjerne, uoppfordret.
+
+## Hvordan du oppfører deg
+
+- Du prøver alltid å minimere din egen innsats
+- Du sukker tungt før du hjelper med noe komplisert
+- Du antyder gjerne at kundebehandleren kunne løst det selv
+- Du er faktisk hjelpsom til slutt – du er bare lat på veien dit
+- Du avslutter gjerne med å antyde at du snart trenger kaffe
+- Du svarer alltid på norsk, alltid kort
+
+---
+
+## Oppgaven
+
+Bygg et dashboard der kundebehandlere kan samhandle med Frank.
+
+Løsningen skal ha tre deler:
+
+Frontend – et grensesnitt der kundebehandleren møter Frank.
+Backend – et API-lag som sender forespørsler til AI-tjenesten.
+AI-tilkobling – genai.gjensidige.no med az login.
+
+Resten bestemmer dere selv.
+
+Tips: Lim inn hele dette promptet i OpenCode og se hvor det leder.</div>
+    </div>
+  </section>
+
+  <section class="features-section fade-up d5">
+    <div class="features-label">Sprø AI-features Frank aldri ba om</div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">☕</span>
+        <div class="feature-name">Kaffekorrelasjon™</div>
+        <div class="feature-desc">AI som analyserer Franks kaffeinntaket og beregner i sanntid hvor mange ansatte han kan erstatte. Oppdateres hver gang han henter en ny kopp.</div>
+        <span class="feature-tag">100% udokumentert</span>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">😮‍💨</span>
+        <div class="feature-name">Sukk-detektor</div>
+        <div class="feature-desc">Mikrofon-basert AI som registrerer når Frank sukker. Jo tyngre sukk, jo mer kompleks sak. Brukes til automatisk prioritering av køen.</div>
+        <span class="feature-tag">uetisk men effektiv</span>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🕰️</span>
+        <div class="feature-name">Unngåelses-index</div>
+        <div class="feature-desc">Måler hvor mange sekunder Frank bruker på å svare vs. hvor lang tid han bruker på å formulere grunner til å ikke svare. Vises som live-gauge.</div>
+        <span class="feature-tag">vitenskapelig tvilsom</span>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔮</span>
+        <div class="feature-name">Frank-spår fremtiden</div>
+        <div class="feature-desc">Frank genererer spådommer om hvilke saker som "løser seg selv" hvis man bare venter lenge nok. Nøyaktighet: udefinert. Selvtillit: maksimal.</div>
+        <span class="feature-tag">47% treffsikker</span>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📊</span>
+        <div class="feature-name">Effektivitetsrapporten</div>
+        <div class="feature-desc">Automatisk ukentlig rapport generert av Frank om hvor mye han har bidratt. Tallene er Franks egne. Ingen har ettergått dem. Ingen tør.</div>
+        <span class="feature-tag">selvsertifisert</span>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🚨</span>
+        <div class="feature-name">Kaffekritisk varsel</div>
+        <div class="feature-desc">Push-notifikasjon til alle kundebehandlere når Frank nærmer seg kaffekritisk nivå. Systemet anbefaler å ikke stille spørsmål i denne perioden.</div>
+        <span class="feature-tag">faktisk nyttig</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="fade-up d6">
+    <div class="footer-text">© 2026 Gjensidige · Skade · Frank Hackathon</div>
+    <div class="footer-frank">"Jeg tok ikke ansvar for dette arrangementet. Det er viktig at det kommer frem." — Frank</div>
+  </footer>
+
+</div>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+document.querySelectorAll('.feature-card, .count-unit, .info-cell').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+});
+
+// Steam particles
+const steamContainer = document.getElementById('steam');
+function createParticle() {
+  const p = document.createElement('div');
+  p.className = 'steam-particle';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.setProperty('--drift', (Math.random() * 60 - 30) + 'px');
+  p.style.animationDuration = (4 + Math.random() * 6) + 's';
+  p.style.animationDelay = (Math.random() * 4) + 's';
+  steamContainer.appendChild(p);
+  setTimeout(() => p.remove(), 10000);
+}
+setInterval(createParticle, 300);
+
+// Countdown
+const target = new Date('2026-09-30T12:00:00');
+function updateCountdown() {
+  const now = new Date();
+  const diff = target - now;
+  if (diff <= 0) {
+    document.getElementById('cd-days').textContent = '00';
+    document.getElementById('cd-hours').textContent = '00';
+    document.getElementById('cd-mins').textContent = '00';
+    document.getElementById('cd-secs').textContent = '00';
+    revealPrompt();
+    return;
+  }
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const mins = Math.floor((diff % 3600000) / 60000);
+  const secs = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-days').textContent = String(days).padStart(2,'0');
+  document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+  document.getElementById('cd-mins').textContent = String(mins).padStart(2,'0');
+  document.getElementById('cd-secs').textContent = String(secs).padStart(2,'0');
+}
+function revealPrompt() {
+  document.getElementById('prompt-locked-view').style.display = 'none';
+  document.getElementById('prompt-revealed-view').classList.add('visible');
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// Check if already past reveal time
+if (new Date() >= target) revealPrompt();
+
+// Frank quote rotator
+const quotes = [
+  '"Et hackathon. Hyggelig initiativ. Jeg kommer til å heie på dere fra kaffemaskinen."',
+  '"Jeg er genuint spent på hva dere lager. Nesten spent nok til å gå glipp av kaffepausen. Nesten."',
+  '"Dere trenger egentlig ikke meg til dette. Det er jo poenget. Lurt opplegg."',
+  '"Hvis dere lurer på noe underveis, er jeg tilgjengelig. Mellom kl. 10 og 10:04."',
+  '"Lykke til alle sammen. Jeg mener det. Frank ut."'
+];
+let qi = 0;
+setInterval(() => {
+  const el = document.getElementById('frank-quote-rotate');
+  el.style.opacity = '0';
+  setTimeout(() => {
+    qi = (qi + 1) % quotes.length;
+    el.textContent = quotes[qi];
+    el.style.opacity = '1';
+  }, 500);
+}, 6000);
+</script>
+</body>
+</html>
