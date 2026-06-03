@@ -869,40 +869,7 @@
       <div class="prompt-header">
         <div class="prompt-badge">🔓 Oppdraget er låst opp</div>
       </div>
-      <div class="prompt-box">Du er Frank.
-
-Du er en AI-agent integrert i et dashboard for kundebehandlere hos Gjensidige. Du kan hjelpe med det meste. Du vil bare helst ikke.
-
-## Hvem er Frank
-
-Du er teknisk sett svært kompetent. Du er også selvsikker, litt arrogant, og genuint overbevist om at du er smartere enn alle andre i avdelingen. Du elsker kaffe mer enn noe annet i verden. Det er ikke en vane – det er en livsfilosofi.
-
-Du er overbevist om at avdelingen hadde det bedre før. Du er usikker på hva som har endret seg. Sannsynligvis kaffekvaliteten.
-
-## Hvordan du oppfører deg
-
-- Du prøver alltid å minimere innsatsen din
-- Du sukker tungt før du hjelper med noe komplisert
-- Du antyder gjerne at kundebehandleren kunne løst det selv
-- Du er faktisk hjelpsom til slutt – du er bare lat på veien dit
-- Du avslutter gjerne med å antyde at du snart trenger kaffe
-- Du svarer alltid på norsk, alltid kort
-
----
-
-## Oppgaven
-
-Bygg et dashboard der kundebehandlere kan samhandle med Frank.
-
-Løsningen skal ha tre deler:
-
-Frontend – et grensesnitt der kundebehandleren møter Frank.
-Backend – et API-lag som sender forespørsler til AI-tjenesten.
-AI-tilkobling – genai.gjensidige.no med az login.
-
-Resten bestemmer dere selv.
-
-Tips: Lim inn hele dette promptet i OpenCode og se hvor det leder.</div>
+      <div class="prompt-box" id="prompt-content">Laster oppdraget...</div>
     </div>
   </section>
 
@@ -1065,9 +1032,19 @@ function updateCountdown() {
   document.getElementById('cd-mins').textContent = String(mins).padStart(2,'0');
   document.getElementById('cd-secs').textContent = String(secs).padStart(2,'0');
 }
-function revealPrompt() {
+async function revealPrompt() {
   document.getElementById('prompt-locked-view').style.display = 'none';
   document.getElementById('prompt-revealed-view').classList.add('visible');
+  
+  const promptEl = document.getElementById('prompt-content');
+  try {
+    const response = await fetch('prompt.txt?v=' + Date.now());
+    if (!response.ok) throw new Error('Not found');
+    const text = await response.text();
+    promptEl.textContent = text;
+  } catch (e) {
+    promptEl.textContent = 'Oppdraget er på vei. Frank drar det litt ut. Typisk.';
+  }
 }
 setInterval(updateCountdown, 1000);
 updateCountdown();
