@@ -300,6 +300,54 @@
   .prompt-box::-webkit-scrollbar-track { background: transparent; }
   .prompt-box::-webkit-scrollbar-thumb { background: var(--amber); opacity: 0.3; }
 
+  /* PREP SECTION */
+  .prep-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    border: 1px solid rgba(245,236,215,0.06);
+  }
+  .prep-item {
+    padding: 1.5rem;
+    background: rgba(245,236,215,0.02);
+    border: 1px solid rgba(245,236,215,0.04);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .prep-top {
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .prep-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+  .prep-name {
+    font-size: 12px; font-weight: 500;
+    color: var(--cream); letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+  .prep-tag {
+    font-size: 9px; letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--amber); opacity: 0.6;
+  }
+  .prep-desc {
+    font-size: 11px; line-height: 1.7;
+    color: var(--cream); opacity: 0.5;
+  }
+  .prep-desc code {
+    font-family: 'DM Mono', monospace;
+    color: var(--amber); opacity: 0.9;
+    font-size: 10px;
+  }
+  .prep-link {
+    font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--amber); opacity: 0.7;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201,123,42,0.3);
+    padding-bottom: 2px;
+    align-self: flex-start;
+    transition: opacity 0.2s;
+  }
+  .prep-link:hover { opacity: 1; }
+
   /* SPRØ AI FEATURES */
   .features-section { padding: 2rem; }
   .features-label {
@@ -689,6 +737,60 @@ AI-tilkobling – genai.gjensidige.no med az login.
 Resten bestemmer dere selv.
 
 Tips: Lim inn hele dette promptet i OpenCode og se hvor det leder.</div>
+    </div>
+  </section>
+
+  <section class="prep-section fade-up d5">
+    <div style="padding: 0 2rem 2rem;">
+      <div class="features-label">Forberedelser</div>
+      <div class="prep-grid">
+
+        <div class="prep-item">
+          <div class="prep-top">
+            <span class="prep-icon">🔑</span>
+            <div>
+              <div class="prep-name">Tilgang til genai.gjensidige.no</div>
+              <span class="prep-tag">valgfritt</span>
+            </div>
+          </div>
+          <div class="prep-desc">AI-tjenesten hackathon-oppgaven er bygget rundt. Krever <code>az login</code> og intern tilgang. Ikke et krav — men det er her Frank bor.</div>
+        </div>
+
+        <div class="prep-item">
+          <div class="prep-top">
+            <span class="prep-icon">⚡</span>
+            <div>
+              <div class="prep-name">OpenCode</div>
+              <span class="prep-tag">anbefalt</span>
+            </div>
+          </div>
+          <div class="prep-desc">Hackathon-en er en perfekt mulighet til å prøve AI-assistert koding i terminalen. Lim inn Frank-promptet og se hvor det leder.</div>
+          <a href="https://opencode.ai/" target="_blank" class="prep-link">opencode.ai →</a>
+        </div>
+
+        <div class="prep-item">
+          <div class="prep-top">
+            <span class="prep-icon">🙋</span>
+            <div>
+              <div class="prep-name">Snakk med Trond eller Ulrik</div>
+              <span class="prep-tag">hjelp</span>
+            </div>
+          </div>
+          <div class="prep-desc">Trenger du tilgang, har spørsmål om oppsettet, eller lurer på hva Frank egentlig mener? Ta kontakt.</div>
+        </div>
+
+        <div class="prep-item">
+          <div class="prep-top">
+            <span class="prep-icon">🛠️</span>
+            <div>
+              <div class="prep-name">Andre nyttige verktøy</div>
+              <span class="prep-tag">valgfritt</span>
+            </div>
+          </div>
+          <div class="prep-desc">VS Code, Cursor, eller din favoritteditor. Azure CLI for autentisering. Node, Python, eller hva du er komfortabel med. Frank bryr seg ikke om stacken — han er opptatt med kaffen.</div>
+        </div>
+
+      </div>
     </div>
   </section>
 
