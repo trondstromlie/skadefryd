@@ -592,7 +592,8 @@
     .tagline { font-size: 12px; max-width: 100%; }
 
     /* Info row */
-    .info-cell { flex: 1 1 45%; min-width: 130px; padding: 1rem 1.25rem; }
+    .info-cell { flex: 1 1 100%; min-width: unset; padding: 1rem 1.25rem; border-right: none; border-bottom: 1px solid rgba(245,236,215,0.08); }
+    .info-cell:last-child { border-bottom: none; }
 
     /* Countdown */
     .count-unit { padding: 1rem 1rem; }
