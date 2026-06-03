@@ -572,58 +572,53 @@
   .d3{animation-delay:0.4s} .d4{animation-delay:0.55s}
   .d5{animation-delay:0.7s} .d6{animation-delay:0.85s}
 
-  /* FRANK'S EYE */
+  /* FRANK'S EYE - Matrix style */
   #frank-eye {
     position: fixed;
-    bottom: -40px;
+    bottom: -20px;
     left: 50%;
     transform: translateX(-50%);
     pointer-events: none;
     z-index: 4;
     opacity: 0;
-    transition: bottom 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s;
+    transition: bottom 1.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 1s;
+    font-family: 'DM Mono', monospace;
+    font-size: 6px;
+    line-height: 1.1;
+    letter-spacing: 1px;
+    color: var(--amber);
+    white-space: pre;
+    text-align: center;
   }
   #frank-eye.peeking {
-    bottom: 12px;
+    bottom: 6px;
     opacity: 1;
   }
-  .eye-shape {
-    width: 54px; height: 28px;
-    position: relative;
-    display: flex; align-items: center; justify-content: center;
+  .matrix-eye {
+    opacity: 0.07;
+    animation: matrix-flicker 12s infinite;
+    text-shadow: 0 0 6px rgba(201,123,42,0.1);
   }
-  .eye-shape::before {
-    content: '';
-    position: absolute; inset: 0;
-    border: 1.5px solid rgba(201,123,42,0.35);
-    border-radius: 50%;
-    clip-path: ellipse(100% 60% at 50% 40%);
+  .matrix-eye .iris {
+    opacity: 1;
+    color: var(--amber);
   }
-  .eye-pupil {
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    background: var(--amber);
-    opacity: 0.5;
-    animation: eye-blink 5s infinite;
-    position: relative; z-index: 1;
-    margin-top: -4px;
+  .matrix-eye .pupil {
+    opacity: 1.5;
+    animation: matrix-pulse 5s infinite;
   }
-  .eye-lid {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 50%;
-    background: var(--espresso);
-    border-radius: 100% 100% 0 0 / 100% 100% 0 0;
-    animation: eye-blink-lid 5s infinite;
-    transform-origin: top center;
+  @keyframes matrix-flicker {
+    0%, 100% { opacity: 0.07; }
+    30% { opacity: 0.05; }
+    50% { opacity: 0.09; }
+    73% { opacity: 0.04; }
+    74% { opacity: 0.08; }
+    75% { opacity: 0.06; }
+    90% { opacity: 0.07; }
   }
-  @keyframes eye-blink {
-    0%,88%,96%,100% { transform: scaleY(1); }
-    92% { transform: scaleY(0.05); }
-  }
-  @keyframes eye-blink-lid {
-    0%,88%,96%,100% { transform: scaleY(0); }
-    92% { transform: scaleY(1); }
+  @keyframes matrix-pulse {
+    0%, 100% { opacity: 1.5; }
+    50% { opacity: 2; }
   }
 
   /* MOBILE */
@@ -1008,10 +1003,11 @@ Tips: Lim inn hele dette promptet i OpenCode og se hvor det leder.</div>
   </section>
 
   <div id="frank-eye" title="Frank ser deg">
-    <div class="eye-shape">
-      <div class="eye-pupil"></div>
-      <div class="eye-lid"></div>
-    </div>
+    <div class="matrix-eye">.--~~""""~~--.
+.'              `.
+(  <span class="iris">ooo<span class="pupil">O</span>ooo</span>  )
+ `.            .'
+   `'--....--'`</div>
   </div>
 
   <footer class="fade-up d6">
