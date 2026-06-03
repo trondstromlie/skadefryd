@@ -582,7 +582,7 @@
     <span>Beskjed: "Jeg sa fra. Ingen hørte. Her er vi."</span>
   </div>
   <div class="bsod-pct">Samler inn feilinformasjon: <span id="bsod-progress">0</span>% fullført</div>
-  <button class="bsod-restart" id="bsod-restart-btn">☕ Gi Frank en kaffe og start på nytt</button>
+  <button class="bsod-restart" id="bsod-restart-btn"><span style="font-size:1.4em;vertical-align:middle;margin-right:6px;">☕</span>Gi Frank en kaffe og start på nytt</button>
   <div class="bsod-errorcode">0x000000CF · FRANK_NO_COFFEE_FOUND · Build 2026.09.30</div>
 </div>
 
@@ -592,7 +592,7 @@
     <div class="energy-fill" id="energy-fill"></div>
   </div>
   <span class="energy-num" id="energy-num">--</span>
-  <button id="kaffe-btn">☕ Gi Frank en kaffe før han sovner</button>
+  <button id="kaffe-btn"><span style="font-size:1.4em;vertical-align:middle;margin-right:6px;">☕</span>Gi Frank en kaffe før han sovner</button>
 </div>
 
 <div class="critical-warning" id="critical-warning">
@@ -981,8 +981,8 @@ document.getElementById('kaffe-btn').addEventListener('click', () => {
   saveEnergy(currentEnergy);
   renderEnergy();
   const btn = document.getElementById('kaffe-btn');
-  btn.textContent = '☕ Frank er fornøyd. Foreløpig.';
-  setTimeout(() => { btn.textContent = '☕ Gi Frank en kaffe før han sovner'; }, 1200);
+  btn.innerHTML = '<span style="font-size:1.4em;vertical-align:middle;margin-right:6px;">☕</span>Frank er fornøyd. Foreløpig.';
+  setTimeout(() => { btn.innerHTML = '<span style="font-size:1.4em;vertical-align:middle;margin-right:6px;">☕</span>Gi Frank en kaffe før han sovner'; }, 1200);
 });
 
 // Frank quote rotator
