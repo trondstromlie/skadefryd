@@ -458,10 +458,7 @@
     height: 100%; border-radius: 2px;
     background: var(--amber);
     width: 100%;
-    transform-origin: left;
-    transform: scaleX(1);
-    transition: transform 1s linear, background 0.5s;
-    will-change: transform;
+    transition: width 1s linear, background 0.5s;
   }
   .energy-fill.low { background: #c94040; }
   .energy-num {
@@ -1041,7 +1038,7 @@ function renderEnergy() {
   const warn = document.getElementById('critical-warning');
   const pct  = Math.max(0, Math.min(100, currentEnergy));
 
-  fill.style.transform = `scaleX(${pct / 100})`;
+  fill.style.width = pct + '%';
   num.textContent  = pct;
 
   if (pct === 0) { showBsod(); return; }
