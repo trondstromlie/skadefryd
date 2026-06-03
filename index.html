@@ -18,7 +18,10 @@
     --steam: rgba(245, 236, 215, 0.06);
   }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
 
   body {
     background: var(--espresso);
@@ -26,6 +29,7 @@
     font-family: 'DM Mono', monospace;
     min-height: 100vh;
     overflow-x: hidden;
+    max-width: 100vw;
     cursor: none;
   }
 
@@ -423,12 +427,15 @@
     width: 100%;
   }
   .energy-left {
-    display: flex; align-items: center; gap: 1rem; flex: 1; min-width: 0; overflow: hidden;
+    display: flex; align-items: center; gap: 0.75rem;
+    flex: 1; min-width: 0;
   }
-  .energy-track { flex: 1; min-width: 0; }
-  .energy-right {
-    flex-shrink: 0;
+  .energy-track {
+    flex: 1; min-width: 0; height: 4px;
+    background: rgba(245,236,215,0.06);
+    border-radius: 2px; overflow: hidden;
   }
+  .energy-right { flex-shrink: 0; }
   #energy-bar-wrap.critical {
     border-bottom-color: rgba(180,30,30,0.6);
     animation: critpulse 1.5s infinite;
@@ -448,11 +455,6 @@
     font-size: 9px; letter-spacing: 0.25em;
     text-transform: uppercase; color: var(--amber);
     opacity: 0.6; white-space: nowrap; flex-shrink: 0;
-  }
-  .energy-track {
-    flex: 1; height: 4px;
-    background: rgba(245,236,215,0.06);
-    border-radius: 2px; overflow: hidden;
   }
   .energy-fill {
     height: 100%; border-radius: 2px;
@@ -590,12 +592,7 @@
     .page { padding-top: 78px; }
 
     /* Coffee ring: shrink and pull to edge */
-    .coffee-ring {
-      width: 130px; height: 130px;
-      border-width: 10px;
-      right: -30px; top: 4%;
-      opacity: 0.4;
-    }
+    .coffee-ring { display: none; }
 
     /* Header */
     header { padding: 1.25rem 1.25rem 0; flex-wrap: wrap; gap: 6px; }
