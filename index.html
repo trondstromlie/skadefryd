@@ -68,7 +68,7 @@
     pointer-events: none; z-index: 2;
   }
 
-  .page { position: relative; z-index: 3; }
+  .page { position: relative; z-index: 3; overflow-x: clip; }
 
   /* HEADER STAMP */
   header {
@@ -629,7 +629,9 @@
   /* coffee steam particles */
   .steam-container {
     position: fixed; bottom: 0; left: 0; right: 0;
-    pointer-events: none; z-index: 0; overflow: hidden; height: 200px;
+    pointer-events: none; z-index: 0;
+    overflow: hidden; clip-path: inset(0);
+    height: 200px; width: 100vw;
   }
   .steam-particle {
     position: absolute; bottom: 0;
@@ -942,8 +944,8 @@ const steamContainer = document.getElementById('steam');
 function createParticle() {
   const p = document.createElement('div');
   p.className = 'steam-particle';
-  p.style.left = Math.random() * 100 + '%';
-  p.style.setProperty('--drift', (Math.random() * 60 - 30) + 'px');
+  p.style.left = (5 + Math.random() * 90) + '%';
+  p.style.setProperty('--drift', (Math.random() * 30 - 15) + 'px');
   p.style.animationDuration = (4 + Math.random() * 6) + 's';
   p.style.animationDelay = (Math.random() * 4) + 's';
   steamContainer.appendChild(p);
