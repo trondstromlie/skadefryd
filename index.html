@@ -472,7 +472,7 @@
     <div class="energy-fill" id="energy-fill"></div>
   </div>
   <span class="energy-num" id="energy-num">--</span>
-  <button id="kaffe-btn">☕ Kaffe registrert</button>
+  <button id="kaffe-btn">☕ Gi Frank en kaffe før han sovner</button>
 </div>
 
 <div class="critical-warning" id="critical-warning">
@@ -783,8 +783,8 @@ document.getElementById('kaffe-btn').addEventListener('click', () => {
   saveEnergy(currentEnergy);
   renderEnergy();
   const btn = document.getElementById('kaffe-btn');
-  btn.textContent = '☕ Registrert';
-  setTimeout(() => { btn.textContent = '☕ Kaffe registrert'; }, 1200);
+  btn.textContent = '☕ Frank er fornøyd. Foreløpig.';
+  setTimeout(() => { btn.textContent = '☕ Gi Frank en kaffe før han sovner'; }, 1200);
 });
 
 // Frank quote rotator
