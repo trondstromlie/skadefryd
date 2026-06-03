@@ -626,6 +626,31 @@
     .bsod-restart { width: 100%; justify-content: center; }
   }
 
+  /* KAFFE SPLASH */
+  .splash-particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    font-size: 1.4rem;
+    line-height: 1;
+    transform-origin: center;
+    animation: splash-fly var(--dur) ease-out forwards;
+  }
+  .splash-dot {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    width: var(--size); height: var(--size);
+    border-radius: 50%;
+    background: var(--col);
+    animation: splash-fly var(--dur) ease-out forwards;
+  }
+  @keyframes splash-fly {
+    0%   { transform: translate(0,0) rotate(0deg) scale(1); opacity: 1; }
+    80%  { opacity: 1; }
+    100% { transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.3); opacity: 0; }
+  }
+
   /* coffee steam particles */
   .steam-container {
     position: fixed; bottom: 0; left: 0; right: 0;
@@ -1060,7 +1085,52 @@ setInterval(() => {
   }
 }, DRAIN_INTERVAL);
 
-document.getElementById('kaffe-btn').addEventListener('click', () => {
+function splashKaffe(originEl) {
+  const rect = originEl.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+
+  const cups    = ['☕','☕','☕','☕','☕'];
+  const sparks  = ['#C97B2A','#E8A94A','#F5ECD7','#8B3A1A','#C97B2A'];
+  const count   = 18;
+
+  for (let i = 0; i < count; i++) {
+    const isCup = i < 6;
+    const el    = document.createElement('div');
+    el.className = isCup ? 'splash-particle' : 'splash-dot';
+
+    const angle  = (360 / count) * i + (Math.random() * 20 - 10);
+    const dist   = 80 + Math.random() * 120;
+    const rad    = angle * Math.PI / 180;
+    const tx     = Math.cos(rad) * dist;
+    const ty     = Math.sin(rad) * dist;
+    const rot    = (Math.random() * 720 - 360) + 'deg';
+    const dur    = (0.6 + Math.random() * 0.5) + 's';
+
+    el.style.left = cx + 'px';
+    el.style.top  = cy + 'px';
+    el.style.setProperty('--tx',  tx + 'px');
+    el.style.setProperty('--ty',  ty + 'px');
+    el.style.setProperty('--rot', rot);
+    el.style.setProperty('--dur', dur);
+
+    if (isCup) {
+      el.textContent = '☕';
+    } else {
+      const size = (4 + Math.random() * 6) + 'px';
+      el.style.setProperty('--size', size);
+      el.style.setProperty('--col', sparks[i % sparks.length]);
+      el.style.marginLeft = '-' + (parseFloat(size) / 2) + 'px';
+      el.style.marginTop  = '-' + (parseFloat(size) / 2) + 'px';
+    }
+
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1200);
+  }
+}
+
+document.getElementById('kaffe-btn').addEventListener('click', (e) => {
+  splashKaffe(e.currentTarget);
   currentEnergy = Math.min(100, currentEnergy + COFFEE_BOOST);
   saveEnergy(currentEnergy);
   renderEnergy();
