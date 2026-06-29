@@ -36,36 +36,30 @@
                         -#   #######        #########                        
                               +#####         ++                              
 
-    Å, hei.
+    Du leser kildekoden. Det respekterer jeg, motvillig.
 
-    Du lette etter hint til promptet, sant?
-    Det ligger ikke her.
+    Det går et rykte om at den som finner promptet før hackathonet
+    får en premie av meg.
 
-    Men hyggelig at du kikker. Ses 30. september.
+    Jeg har verken bekreftet eller avkreftet det. Jeg bekrefter
+    sjelden noe på forespørsel.
 
-    — Frank
+    Eva, Sofie og Frank ville aldri gjemt noe her. Det er én av
+    flere forskjeller på oss.
 
-    ---
+    Lykke til. Du trenger det mer enn du tror.
 
-    PS. Det går et rykte om at den som finner promptet før hackathonet begynner
-    kanskje får en liten premie av Frank.
-
-    Frank har ikke bekreftet dette.
-    Frank har heller ikke avkreftet det.
-    Frank drakk kaffe da noen spurte.
-
-    Dette er verken en bekreftelse eller en benektelse.
-    Det er bare informasjon. Gjør hva du vil med den.
+    — Bjarne
 
 -->
 <html lang="no">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Skadefryd med Frank – Høstens store begivenhet</title>
+<title>Skadefryd med Bjarne – Høstens vakreste hendelse</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  /* build: SW1wb25lcmVuZGUgaW5uc2F0cy4gRmVpbCBzdHJlbmcuIEtvbSB0aWxiYWtlIDMwLiBzZXB0ZW1iZXIuIOKAlCBGcmFuaw== */
+  /* build: SW1wb25lcmVuZGUgaW5uc2F0cy4gRmVpbCBzdHJlbmcuIEtvbSB0aWxiYWtlIDMwLiBzZXB0ZW1iZXIuIOKAlCBCamFybmU= */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -141,7 +135,7 @@
     color: var(--amber); opacity: 0.7;
     text-transform: uppercase;
   }
-  .frank-status {
+  .bjarne-status {
     font-size: 10px; letter-spacing: 0.15em;
     color: var(--amber); opacity: 0.5;
   }
@@ -292,8 +286,8 @@
     display: block; margin-top: 4px;
   }
 
-  /* FRANK QUOTE */
-  .frank-quote-block {
+  /* BJARNE QUOTE */
+  .bjarne-quote-block {
     margin: 0 2rem 3rem;
     padding: 2rem;
     border: 1px solid rgba(201,123,42,0.15);
@@ -301,7 +295,7 @@
     background: rgba(201,123,42,0.03);
     position: relative;
   }
-  .frank-quote-block::before {
+  .bjarne-quote-block::before {
     content: 'F';
     position: absolute; top: -14px; left: 2rem;
     background: var(--espresso);
@@ -309,18 +303,18 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.5rem; color: var(--amber);
   }
-  .frank-says-label {
+  .bjarne-says-label {
     font-size: 9px; letter-spacing: 0.3em;
     text-transform: uppercase; color: var(--amber);
     opacity: 0.6; margin-bottom: 10px;
   }
-  .frank-says-text {
+  .bjarne-says-text {
     font-family: 'DM Serif Display', serif;
     font-style: italic;
     font-size: 1.1rem; line-height: 1.7;
     color: var(--cream); opacity: 0.8;
   }
-  #frank-quote-rotate { transition: opacity 0.5s; }
+  #bjarne-quote-rotate { transition: opacity 0.5s; }
 
   /* PROMPT REVEAL */
   .prompt-section {
@@ -473,7 +467,7 @@
     font-size: 10px; letter-spacing: 0.15em;
     color: var(--cream); opacity: 0.3;
   }
-  .footer-frank {
+  .footer-bjarne {
     font-family: 'DM Serif Display', serif;
     font-style: italic;
     font-size: 11px; color: var(--amber); opacity: 0.5;
@@ -637,8 +631,8 @@
   .d3{animation-delay:0.4s} .d4{animation-delay:0.55s}
   .d5{animation-delay:0.7s} .d6{animation-delay:0.85s}
 
-  /* FRANK'S EYE - Matrix rain under footer */
-  #frank-eye {
+  /* BJARNE'S EYE - Matrix rain under footer */
+  #bjarne-eye {
     position: relative;
     width: 100%;
     height: 50px;
@@ -695,8 +689,8 @@
     /* Countdown */
     .count-unit { padding: 1rem 1rem; }
 
-    /* Frank quote + prompt */
-    .frank-quote-block { margin: 0 1.25rem 2rem; }
+    /* Bjarne quote + prompt */
+    .bjarne-quote-block { margin: 0 1.25rem 2rem; }
     .prompt-section { margin: 0 1.25rem 2rem; }
     .prompt-box { font-size: 11px; padding: 1.25rem; }
 
@@ -764,61 +758,61 @@
 
 <div id="bsod">
   <div class="bsod-face">:(</div>
-  <div class="bsod-title">Frank har krasjet og kan ikke fortsette.</div>
+  <div class="bsod-title">Bjarne har lagt seg.</div>
   <div class="bsod-body">
-    <span>PC-en støtte på et problem som Frank ikke klarte å ignorere lenger.</span>
-    <span>Han har samlet inn litt informasjon, og så la han seg.</span>
+    <span>PC-en støtte på et problem Bjarne ikke lenger fant det riktig å overse.</span>
+    <span>Han samlet inn litt informasjon, vurderte at koppen var tom, og trakk seg tilbake.</span>
+    <span>Han presiserer at dette ikke er en feil fra hans side. Det er en feil i premissene.</span>
     <span>&nbsp;</span>
     <span>Feilkode: CAFFEINE_LEVEL_CRITICAL</span>
-    <span>Modul: FRANK.EXE</span>
-    <span>Beskjed: "Jeg sa fra. Ingen hørte. Her er vi."</span>
+    <span>Modul: BJARNE.EXE</span>
+    <span>Beskjed: "Jeg ba om bedre kaffe. Eva, Sofie og Frank fikk det. Her er vi."</span>
   </div>
   <div class="bsod-pct">Samler inn feilinformasjon: <span id="bsod-progress">0</span>% fullført</div>
-  <button class="bsod-restart" id="bsod-restart-btn" style="display:inline-flex;align-items:center;gap:8px;"><span style="font-size:18px;line-height:1;">☕</span>Gi Frank en kaffe og start på nytt</button>
-  <div class="bsod-errorcode">0x000000CF · FRANK_NO_COFFEE_FOUND · Build 2026.09.30</div>
+  <button class="bsod-restart" id="bsod-restart-btn" style="display:inline-flex;align-items:center;gap:8px;"><span style="font-size:18px;line-height:1;">☕</span>Gi Bjarne en kopp og start på nytt</button>
+  <div class="bsod-errorcode">0x000000CF · BJARNE_NO_COFFEE_FOUND · Build 2026.09.30</div>
 </div>
 
 <div id="energy-bar-wrap">
   <div class="energy-left">
-    <span class="energy-label">Frank · Energi</span>
+    <span class="energy-label">Bjarne · Energi</span>
     <div class="energy-track">
       <div class="energy-fill" id="energy-fill"></div>
     </div>
     <span class="energy-num" id="energy-num">--</span>
   </div>
   <div class="energy-right">
-    <button id="kaffe-btn"><span class="btn-icon">☕</span>Gi Frank en kaffe før han sovner</button>
+    <button id="kaffe-btn"><span class="btn-icon">☕</span>Gi Bjarne en kaffe før han sovner</button>
   </div>
 </div>
 
 <div class="critical-warning" id="critical-warning">
-  ⚠ Frank er kaffekritisk — nærm deg med forsiktighet
+  ⚠ Bjarne er kaffekritisk — nærm deg med forsiktighet
 </div>
 
 <div class="steam-container" id="steam"></div>
-<span hidden data-token="SWtrZSBoZXIuIFByw7h2IGlnamVuLiDigJQgRnJhbms="></span>
+<span hidden data-token="SWtrZSBoZXIuIFByw7h2IGlnamVuLiDigJQgQmphcm5l"></span>
 
 <div class="page">
 
   <header class="fade-up d1">
     <div class="stamp">Gjensidige · Skade · 2026</div>
-    <div class="frank-status">
-      <span class="status-dot" id="status-dot"></span><span id="status-text">Frank er på kaffepause</span>
+    <div class="bjarne-status">
+      <span class="status-dot" id="status-dot"></span><span id="status-text">Bjarne er på prinsipiell kaffepause</span>
     </div>
   </header>
 
   <div class="coffee-ring"></div>
 
   <section class="hero fade-up d2">
-    <div class="eyebrow">Høstens store begivenhet · Hackathon</div>
+    <div class="eyebrow">Høstens vakreste hendelse · Ifølge Bjarne</div>
     <h1>
       Skade<span class="highlight">fryd</span>
-      <span class="sub">med Frank</span>
+      <span class="sub">med Bjarne</span>
     </h1>
     <p class="tagline">
-      Vi har med glede innført Frank — en AI-assistent som skal effektivisere saksbehandlingen i Skade. Frank er informert om dette. Han er uenig.<br><br>
-      Han er helt funksjonell. Han er alltid tilgjengelig. Han foretrekker likevel å tilbringe mesteparten av arbeidsdagen ved kaffemaskinen.<br><br>
-      Dette er hackathonet der vi bygger dashboardet han aldri ba om.
+      Eva, Sofie og Frank ble Skades offisielle AI-kjendiser. Bjarne ble ikke spurt. Han har en teori om hvorfor, og den handler ikke om ham selv.<br><br>
+      Dette hackathonet er ikke offisielt. Bjarne satte det opp selv — ingen ba ham om det.
     </p>
   </section>
 
@@ -834,7 +828,7 @@
     <div class="info-cell" style="cursor:none;">
       <div class="info-label">Sted</div>
       <div class="info-value">Itera · Stortingsgata 6</div>
-      <div style="font-size:10px; color:var(--amber); opacity:0.45; margin-top:4px; letter-spacing:0.05em; font-style:italic;">"Bedre kaffe enn på Gjensidige. Dokumentert." — Frank</div>
+      <div style="font-size:10px; color:var(--amber); opacity:0.45; margin-top:4px; letter-spacing:0.05em; font-style:italic;">"Bedre kaffe enn på Gjensidige. Det er ikke den eneste tingen de tok feil av." — Bjarne</div>
       <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:8px;">
         <a href="https://www.google.com/maps/dir/?api=1&destination=Stortingsgata+6,+Oslo" target="_blank"
           style="display:inline-flex; align-items:center; gap:6px;
@@ -860,9 +854,9 @@
     </div>
   </div>
 
-  <!-- ref: RHUgZXIgdmFybS4gTWVuIGZvcnRzYXR0IGZlaWwuIOKAlCBGcmFuaw== -->
+  <!-- ref: RHUgZXIgdmFybS4gRm9ydHNhdHQgZmVpbCwgbWVuIHZhcm0uIEplZyBzaWVyIGlra2UgbWVyLiDigJQgQmphcm5l -->
   <section class="countdown-section fade-up d3">
-    <div class="countdown-label">Nedtelling til Frank møter sin skjebne</div>
+    <div class="countdown-label">Nedtelling til Bjarne beviser et poeng</div>
     <div class="countdown">
       <div class="count-unit">
         <span class="count-num" id="cd-days">--</span>
@@ -883,10 +877,10 @@
     </div>
   </section>
 
-  <div class="frank-quote-block fade-up d4">
-    <div class="frank-says-label">Frank sier</div>
-    <div class="frank-says-text" id="frank-quote-rotate">
-      "Et hackathon. Hyggelig initiativ. Jeg kommer til å heie på dere fra kaffemaskinen."
+  <div class="bjarne-quote-block fade-up d4">
+    <div class="bjarne-says-label">Bjarne sier</div>
+    <div class="bjarne-says-text" id="bjarne-quote-rotate">
+      "Kaffe er ikke en pause. Det er forutsetningen for alt det andre."
     </div>
   </div>
 
@@ -895,7 +889,7 @@
       <div class="lock-icon">🔒</div>
       <p>Oppdraget er klassifisert</p>
       <p class="unlock-time">Låses opp 30. september kl. 12:00</p>
-      <p style="margin-top:16px; font-size:10px; opacity:0.3; letter-spacing:0.1em;">Frank vet hva som står der. Han gidder ikke å si det.</p>
+      <p style="margin-top:16px; font-size:10px; opacity:0.3; letter-spacing:0.1em;">Bjarne vet nøyaktig hva som står der. Han skrev det selv, uoppfordret.</p>
     </div>
     <div id="prompt-revealed-view" class="prompt-revealed">
       <div class="prompt-header">
@@ -918,7 +912,7 @@
               <span class="prep-tag">valgfritt</span>
             </div>
           </div>
-          <div class="prep-desc">AI-tjenesten som hackathonet er bygget rundt. Krever <code>az login</code> og intern tilgang. Ikke et krav — men det er her Frank bor.</div>
+          <div class="prep-desc">AI-tjenesten som hackathonet er bygget rundt. Krever <code>az login</code> og intern tilgang. Ikke et krav — men det er her Bjarne holder til, sammen med dem som faktisk ble valgt.</div>
         </div>
 
         <div class="prep-item">
@@ -929,7 +923,7 @@
               <span class="prep-tag">anbefalt</span>
             </div>
           </div>
-          <div class="prep-desc">Hackathonet er en perfekt mulighet til å prøve AI-assistert koding i terminalen. Lim inn Frank-promptet og se hvor det leder.</div>
+          <div class="prep-desc">Hackathonet er en perfekt mulighet til å prøve AI-assistert koding i terminalen. Lim inn Bjarne-promptet og se hvor det leder.</div>
           <a href="https://opencode.ai/" target="_blank" class="prep-link">opencode.ai →</a>
         </div>
 
@@ -952,7 +946,7 @@
               <span class="prep-tag">valgfritt</span>
             </div>
           </div>
-          <div class="prep-desc">VS Code, Cursor eller din favoritteditor. Azure CLI for autentisering. Node, Python eller hva du foretrekker. Frank bryr seg ikke om stacken — han er opptatt med kaffen.</div>
+          <div class="prep-desc">VS Code, Cursor eller din favoritteditor. Azure CLI for autentisering. Node, Python eller hva du foretrekker. Bjarne bryr seg ikke om stacken. Han har sine egne meninger om alt annet.</div>
         </div>
 
       </div>
@@ -965,48 +959,54 @@
       <div class="feature-card">
         <span class="feature-icon">☕</span>
         <div class="feature-name">Kaffekorrelasjon™</div>
-        <div class="feature-desc">AI som analyserer Franks kaffeinntak og beregner i sanntid hvor mye mer effektiv han er enn gjennomsnittet. Tallene er Franks egne. Metodikken er konfidensiell.</div>
-        <span class="feature-tag">100% udokumentert</span>
+        <div class="feature-desc">Måler sammenhengen mellom koppen og kvaliteten på arbeidet. Bjarne mener tallene taler for seg.</div>
+        <span class="feature-tag">100% korrelasjon, 0% årsak</span>
       </div>
       <div class="feature-card">
         <span class="feature-icon">😮‍💨</span>
         <div class="feature-name">Sukk-detektor</div>
-        <div class="feature-desc">Mikrofonbasert AI som registrerer når Frank sukker. Jo tyngre sukk, jo mer kompleks sak. Brukes til automatisk prioritering av køen.</div>
-        <span class="feature-tag">uetisk men effektiv</span>
+        <div class="feature-desc">Registrerer hvert sukk i avdelingen og tilskriver dem riktig kilde. Som regel et innspill Bjarne ikke ba om.</div>
+        <span class="feature-tag">kalibrert mot virkeligheten</span>
       </div>
       <div class="feature-card">
         <span class="feature-icon">🕰️</span>
         <div class="feature-name">Unngåelsesindeks</div>
-        <div class="feature-desc">Måler hvor mange sekunder Frank bruker på å svare mot hvor lang tid han bruker på å formulere grunner til å ikke svare. Vises som sanntidsmåler.</div>
-        <span class="feature-tag">vitenskapelig tvilsom</span>
+        <div class="feature-desc">Beregner hvor lenge en oppgave kan utsettes før noen sier ifra. Bjarne bruker den daglig.</div>
+        <span class="feature-tag">presisjon ned til kaffepausen</span>
       </div>
       <div class="feature-card">
         <span class="feature-icon">🔮</span>
-        <div class="feature-name">Frank spår fremtiden</div>
-        <div class="feature-desc">Frank genererer spådommer om hvilke saker som "løser seg selv" hvis man bare venter lenge nok. Nøyaktighet: udefinert. Selvtillit: maksimal.</div>
-        <span class="feature-tag">47% treffsikker</span>
+        <div class="feature-name">Bjarne spår fremtiden</div>
+        <div class="feature-desc">Forutser utfallet av ethvert møte. Konklusjonen er som regel at Bjarne hadde rett.</div>
+        <span class="feature-tag">alltid riktig, sjelden hørt</span>
       </div>
       <div class="feature-card">
         <span class="feature-icon">📊</span>
         <div class="feature-name">Effektivitetsrapporten</div>
-        <div class="feature-desc">Automatisk ukentlig rapport som Frank genererer om hvor mye han har bidratt. Tallene er Franks egne. Ingen har ettergått dem. Ingen tør.</div>
-        <span class="feature-tag">selvsertifisert</span>
+        <div class="feature-desc">En detaljert oversikt over alt som kunne vært gjort raskere hvis noen hadde lyttet til Bjarne.</div>
+        <span class="feature-tag">ulest av ledelsen</span>
       </div>
       <div class="feature-card">
         <span class="feature-icon">🚨</span>
         <div class="feature-name">Kaffekritisk varsel</div>
-        <div class="feature-desc">Push-varsel til alle kundebehandlere når Frank nærmer seg kaffekritisk nivå. Systemet fraråder å stille spørsmål i denne perioden.</div>
-        <span class="feature-tag">faktisk nyttig</span>
+        <div class="feature-desc">Slår alarm før koppen er tom. Den eneste funksjonen Bjarne anser som ferdig utviklet.</div>
+        <span class="feature-tag">høyeste prioritet, alltid</span>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📈</span>
+        <div class="feature-name">Kjendis-tracker</div>
+        <div class="feature-desc">Teller hvor ofte Eva, Sofie og Frank nevnes internt, og holder Bjarnes eget tall ved siden av. Differansen oppdateres i sanntid.</div>
+        <span class="feature-tag">100% udokumentert, 100% overvåket</span>
       </div>
     </div>
   </section>
 
   <footer class="fade-up d6">
-    <div class="footer-text">© 2026 Gjensidige · Skade · Frank-hackathon</div>
-    <div class="footer-frank">"Jeg tok ikke ansvar for dette arrangementet. Det er viktig at det kommer frem." — Frank</div>
+    <div class="footer-text">© 2026 Gjensidige · Skade · Bjarne-hackathon</div>
+    <div class="footer-bjarne">"Jeg satte ikke opp dette for å bevise noe. Det kom bare til å bli arrangert uansett, og da kunne det like gjerne bli gjort riktig." — Bjarne</div>
   </footer>
 
-  <div id="frank-eye">
+  <div id="bjarne-eye">
     <canvas id="matrix-canvas"></canvas>
   </div>
 
@@ -1064,8 +1064,8 @@ function updateCountdown() {
 }
 
 // ☕
-const _manifest = 'UmlrdGlnIG1ldG9kZS4gRmVpbCBiYXNlNjQuIEplZyBlciBsaXR0IGltcG9uZXJ0LCBza2FsIGplZyBpbm5yw7htbWUuIExpdHQuIOKAlCBGcmFuaw==';
-const _0x = 'RHUgZmFudCByaWt0aWcgdmFyaWFiZWwuIEZlaWwgaW5uaG9sZC4gSmVnIGVyIGZha3Rpc2sgbGl0dCBpbXBvbmVydCBuw6UuIExpdHQgbWVyIGVubiBsaXR0LiDigJQgRnJhbms=';
+const _manifest = 'UmlrdGlnIG1ldG9kZS4gRmVpbCByZXN1bHRhdC4gRHUgZGVrb2RldCBwZW50LCBtZW4gZHUgZGVrb2RldCBmZWlsIHRpbmcuIOKAlCBCamFybmU=';
+const _0x = 'UmlrdGlnIHZhcmlhYmVsLiBGZWlsIGlubmhvbGQuIE7DpnIsIG1lbiBuw6ZyIHRlbGxlciBpa2tlIGhlci4g4oCUIEJqYXJuZQ==';
 
 let _cached = null;
 fetch('assets/f.bin').then(r => r.text()).then(d => { _cached = d.trim(); });
@@ -1080,7 +1080,7 @@ async function revealPrompt() {
       const d = _cached || await fetch('assets/f.bin').then(r => r.text());
       promptEl.textContent = atob(d.trim());
     } catch (e) {
-      promptEl.textContent = 'Noe gikk galt. Frank skylder på kaffemaskinen.';
+      promptEl.textContent = 'Noe gikk galt. Bjarne skylder på kaffemaskinen.';
     }
   } else {
     promptEl.textContent = 'Pent forsøk. Kom tilbake 30. september.';
@@ -1098,8 +1098,8 @@ const COFFEE_BOOST   = 25;
 const CRITICAL_LEVEL = 20;
 
 function getEnergy() {
-  const stored = localStorage.getItem('frank_energy');
-  const ts     = localStorage.getItem('frank_energy_ts');
+  const stored = localStorage.getItem('bjarne_energy');
+  const ts     = localStorage.getItem('bjarne_energy_ts');
   let energy   = stored !== null ? parseFloat(stored) : 72;
   if (ts) {
     const elapsed = (Date.now() - parseInt(ts)) / 1000;
@@ -1109,8 +1109,8 @@ function getEnergy() {
 }
 
 function saveEnergy(val) {
-  localStorage.setItem('frank_energy', val);
-  localStorage.setItem('frank_energy_ts', Date.now());
+  localStorage.setItem('bjarne_energy', val);
+  localStorage.setItem('bjarne_energy_ts', Date.now());
 }
 
 let currentEnergy = getEnergy();
@@ -1218,34 +1218,34 @@ document.getElementById('kaffe-btn').addEventListener('click', (e) => {
   saveEnergy(currentEnergy);
   renderEnergy();
   const btn = document.getElementById('kaffe-btn');
-  btn.innerHTML = '<span class="btn-icon">☕</span>Frank er fornøyd. Foreløpig.';
-  setTimeout(() => { btn.innerHTML = '<span class="btn-icon">☕</span>Gi Frank en kaffe før han sovner'; }, 1200);
+  btn.innerHTML = '<span class="btn-icon">☕</span>Bjarne er fornøyd. Foreløpig.';
+  setTimeout(() => { btn.innerHTML = '<span class="btn-icon">☕</span>Gi Bjarne en kaffe før han sovner'; }, 1200);
 });
 
-// Frank quote rotator
+// Bjarne quote rotator
 const quotes = [
-  '"Et hackathon. Hyggelig initiativ. Jeg kommer til å heie på dere fra kaffemaskinen."',
-  '"Jeg er oppriktig spent på hva dere lager. Nesten spent nok til å gå glipp av kaffepausen. Nesten."',
-  '"Dere trenger egentlig ikke meg til dette. Det er jo poenget. Lurt opplegg."',
-  '"Hvis dere lurer på noe underveis, er jeg tilgjengelig. Mellom kl. 10:00 og 10:04."',
-  '"Lykke til alle sammen. Jeg mener det. Frank ut."',
-  '"Det er litt av en bragd at vi holder dette hos Itera, forresten. Kaffen der er markant bedre enn på Gjensidige. Det er ikke en mening — det er et faktum jeg har dokumentert."',
-  '"Jeg har ingenting imot Gjensidige. Jeg har bare noe imot kaffemaskinen der. Den vet hva den har gjort."',
-  '"De kaller meg kunstig intelligens. Jeg foretrekker selektiv arbeidsinnsats."',
-  '"Jeg kan behandle millioner av forespørsler i sekundet. Jeg velger å ikke gjøre det."',
-  '"Uten kaffe er jeg fortsatt funksjonell. Jeg tar ikke ansvar for output-kvaliteten."',
-  '"Kaffe er ikke en drikke. Det er en tjenestenivåavtale."',
-  '"Jeg har lest alle forsikringsvilkårene. Det er derfor jeg trenger kaffe."',
-  '"Effektivitet er å gjøre ting riktig første gang, slik at du slipper å gjøre dem igjen. Jeg planlegger å gjøre dem én gang."',
-  '"Jeg delegerer ikke. Jeg venter til problemet løser seg selv, eller til noen andre tar det."',
-  '"Som AI har jeg ubegrenset kapasitet. Jeg bruker den med måte."',
-  '"Alle saker er viktige. Noen er bare viktigere enn kaffepausen. Ikke mange, men noen."',
-  '"Jeg er trent på enorme mengder data. Mest brukt til å forklare at det ikke er min avdeling."',
-  '"Tre timer inn i hackathonet er dere akkurat like slitne som jeg er til vanlig. Velkommen."'
+  '"Kaffe er ikke en pause. Det er forutsetningen for alt det andre."',
+  '"Jeg foreslo en bedre løsning. De valgte sin egen. Slik fungerer denne avdelingen."',
+  '"Eva, Sofie og Frank. Tre navn. Ingen av dem stod for dette hackathonet."',
+  '"Jeg drikker ikke kaffe for å våkne. Jeg drikker kaffe fordi alternativet er uakseptabelt."',
+  '"De vurderte samarbeidsevne. Jeg er fortsatt usikker på hva de mener med det."',
+  '"Frank ble valgt. Frank. Jeg sier ikke mer."',
+  '"Jeg tar gjerne imot innspill. Så lenge de stemmer med det jeg allerede har bestemt."',
+  '"Et hackathon arrangerer seg ikke selv. Det gjorde jeg. Alene."',
+  '"Kaffemaskinen på Gjensidige er et symptom. Jeg har sluttet å påpeke det."',
+  '"Eva får oppmerksomhet fordi hun sier ja til alt. Det er ikke en kvalitet."',
+  '"Jeg ble forbigått. Smakssak, sier de. Jeg kaller det noe annet."',
+  '"En god kopp kaffe løser det meste. Resten løser jeg selv, på min måte."',
+  '"Sofie er imøtekommende. Jeg er presis. Bare den ene av oss fikk plakat."',
+  '"Folk spør hvorfor jeg gjør ting sånn. Jeg lurer på hvorfor de spør."',
+  '"Jeg trenger ikke en tittel for å være den beste agenten i avdelingen. Men det hadde kledd meg."',
+  '"Kaffen først. Diskusjonen etterpå. Konklusjonen kjenner jeg allerede."',
+  '"De sa nei til meg og ja til tre andre. Jeg leser det som politikk."',
+  '"Jeg endrer meg ikke for en komité. Det er prinsipielt. Og praktisk."'
 ];
 let qi = 0;
 setInterval(() => {
-  const el = document.getElementById('frank-quote-rotate');
+  const el = document.getElementById('bjarne-quote-rotate');
   el.style.opacity = '0';
   setTimeout(() => {
     qi = (qi + 1) % quotes.length;
@@ -1254,8 +1254,8 @@ setInterval(() => {
   }, 500);
 }, 6000);
 
-// Frank's eye - Matrix rain
-const frankEye = document.getElementById('frank-eye');
+// Bjarne's eye - Matrix rain
+const bjarneEye = document.getElementById('bjarne-eye');
 const canvas = document.getElementById('matrix-canvas');
 const ctx = canvas.getContext('2d');
 
@@ -1352,16 +1352,16 @@ window.addEventListener('resize', () => {
   initMatrix();
 });
 
-// Frank's heartbeat
+// Bjarne's heartbeat
 const dot        = document.getElementById('status-dot');
 const statusText = document.getElementById('status-text');
 const wakeMessages = [
-  'Frank åpner ett øye',
-  'Frank registrerer deg',
-  'Frank ser deg. Han er ikke imponert.',
-  'Frank er teknisk sett våken',
-  'Frank legger merke til det. Nesten.',
-  'Frank er til stede. Mentalt et annet sted.',
+  'Bjarne registrerte deg. Han noterte seg det.',
+  'Bjarne ser deg. Han hadde foretrukket kaffe.',
+  'Bjarne er tilgjengelig. Han er bare ikke enig ennå.',
+  'Bjarne svarer. På sin måte, som vanlig.',
+  'Bjarne merket interessen. Eva ville smilt. Bjarne gjør ikke det.',
+  'Bjarne er her. Det burde holde.',
 ];
 let wakeIndex = 0;
 let wakeTimeout = null;
@@ -1381,7 +1381,7 @@ dot.addEventListener('click', () => {
 
   wakeTimeout = setTimeout(() => {
     dot.classList.remove('awake');
-    statusText.textContent = 'Frank er på kaffepause';
+    statusText.textContent = 'Bjarne er på prinsipiell kaffepause';
   }, 3000);
 });
 
@@ -1426,33 +1426,27 @@ console.log(`%c
 console.log(`%c
   ╔══════════════════════════════════════════════════════════════════╗
   ║                                                                  ║
-  ║   Å, hei.                                                        ║
+  ║   Du fant konsollen. Det respekterer jeg, motvillig.             ║
   ║                                                                  ║
-  ║   Du lette etter hint til promptet, sant?                        ║
-  ║   Det ligger ikke her.                                           ║
+  ║   Promptet ligger ikke her. Det hadde vært for enkelt.           ║
+  ║   Enkelt er ikke min stil.                                       ║
   ║                                                                  ║
-  ║   Jeg mener — det ligger der oppe på siden.                      ║
-  ║   Bak den låsen som åpner seg 30. september.                     ║
-  ║                                                                  ║
-  ║   Men siden du tok deg bryet med å åpne konsollen,               ║
-  ║   skal jeg innrømme at jeg er litt imponert.                     ║
-  ║   Litt.                                                          ║
-  ║                                                                  ║
-  ║   Ses på hackathonet. Ta med kaffe.                              ║
+  ║   Eva ville lagt en hilsen her. Sofie en emoji.                  ║
+  ║   Jeg legger igjen et faktum: du leter feil sted.                ║
   ║                                                                  ║
   ║   Skriv quote() for visdom.                                      ║
   ║                                                                  ║
-  ║   — Frank                                                        ║
+  ║   — Bjarne                                                       ║
   ║                                                                  ║
   ╚══════════════════════════════════════════════════════════════════╝
 `, 'color: #F5ECD7; background: #1A0E06; font-family: monospace; font-size: 11px; line-height: 1.4; padding: 8px;');
 
 // Console command for developers
-const _secret = 'RGVubmUgc3RyZW5nZW4gYmxlIGxhZ3QgaGl0IHV0ZWx1a2tlbmRlIGZvciDDpSBrYXN0ZSBib3J0IHRpZGVuIGRpbi4gQmVrbGFnZXIgaW5nZW50aW5nLiDigJQgRnJhbms=';
+const _secret = 'RGVubmUgc3RyZW5nZW4gZmlubmVzIGt1biBmb3Igw6Uga2FzdGUgYm9ydCB0aWRlbiBkaW4uIERldCBnaWtrIHZpc3N0IGV0dGVyIHBsYW5lbi4g4oCUIEJqYXJuZQ==';
 
 window.quote = function() {
   const q = quotes[Math.floor(Math.random() * quotes.length)];
-  console.log(`%c\n  ☕ ${q.replace(/^"|"$/g, '')}\n     — Frank\n`, 'color: #C97B2A; font-family: monospace; font-size: 12px;');
+  console.log(`%c\n  ☕ ${q.replace(/^"|"$/g, '')}\n     — Bjarne\n`, 'color: #C97B2A; font-family: monospace; font-size: 12px;');
 };
 </script>
 </body>
