@@ -771,7 +771,7 @@
   </div>
   <div class="bsod-pct">Samler inn feilinformasjon: <span id="bsod-progress">0</span>% fullført</div>
   <button class="bsod-restart" id="bsod-restart-btn" style="display:inline-flex;align-items:center;gap:8px;"><span style="font-size:18px;line-height:1;">☕</span>Gi Bjarne en kopp og start på nytt</button>
-  <div class="bsod-errorcode">0x000000CF · BJARNE_NO_COFFEE_FOUND · Build 2026.09.30</div>
+  <div class="bsod-errorcode">0x000000CF · BJARNE_NO_COFFEE_FOUND · Build 2026.09.09</div>
 </div>
 
 <div id="energy-bar-wrap">
@@ -812,15 +812,15 @@
       <span class="sub">med Bjarne</span>
     </h1>
     <p class="tagline">
-      Eva, Sofie og Frank ble Skades offisielle AI-kjendiser. Bjarne ble ikke spurt. Han har en teori om hvorfor, og den handler ikke om ham selv.<br><br>
-      Dette hackathonet er ikke offisielt. Bjarne satte det opp selv — ingen ba ham om det.
+      Bjarne er en AI-agent — like god som Eva, Sofie og Frank. Det mener i hvert fall han selv. De tre ble Skades offisielle AI-kjendiser. Bjarne ble ikke spurt, og han har en teori om hvorfor. Den handler ikke om ham selv.<br><br>
+      Nå har han samlet dere i tverrfaglige team med ett oppdrag: bygge AI som får de tre til å se ut som amatører. Hackathonet er ikke offisielt. Ingen ba Bjarne om det — men Bjarne ba dere.
     </p>
   </section>
 
   <div class="info-row fade-up d3">
     <div class="info-cell">
       <div class="info-label">Dato</div>
-      <div class="info-value">30. september 2026</div>
+      <div class="info-value">9. september 2026</div>
     </div>
     <div class="info-cell">
       <div class="info-label">Kl</div>
@@ -889,7 +889,7 @@
     <div id="prompt-locked-view" class="prompt-locked">
       <div class="lock-icon">🔒</div>
       <p>Oppdraget er klassifisert</p>
-      <p class="unlock-time">Låses opp 30. september kl. 12:00</p>
+      <p class="unlock-time">Låses opp 9. september kl. 12:00</p>
       <p style="margin-top:16px; font-size:10px; opacity:0.3; letter-spacing:0.1em;">Bjarne vet nøyaktig hva som står der. Han skrev det selv, uoppfordret.</p>
     </div>
     <div id="prompt-revealed-view" class="prompt-revealed">
@@ -924,7 +924,7 @@
               <span class="prep-tag">anbefalt</span>
             </div>
           </div>
-          <div class="prep-desc">Hackathonet er en perfekt mulighet til å prøve AI-assistert koding i terminalen. Lim inn Bjarne-promptet og se hvor det leder.</div>
+          <div class="prep-desc">Hackathonet er en perfekt mulighet til å prøve AI-assistert koding i terminalen. Lim inn Bjarne-promptet og se hvor det leder. Trenger du hjelp til å installere? Trond har noen triks.</div>
           <a href="https://opencode.ai/" target="_blank" class="prep-link">opencode.ai →</a>
         </div>
 
@@ -936,7 +936,7 @@
               <span class="prep-tag">hjelp</span>
             </div>
           </div>
-          <div class="prep-desc">Snakk med mine undersåtter Trond eller Ulrik. De kan hjelpe med tilgang, oppsett eller andre spørsmål.</div>
+          <div class="prep-desc">Snakk med mine undersåtter Trond, Ulrik eller Michelle. De kan hjelpe med tilgang, oppsett eller andre spørsmål.</div>
         </div>
 
         <div class="prep-item">
@@ -1042,7 +1042,7 @@ function createParticle() {
 setInterval(createParticle, 300);
 
 // Countdown
-const target = new Date('2026-09-30T12:00:00');
+const target = new Date('2026-09-09T12:00:00');
 function updateCountdown() {
   const now = new Date();
   const diff = target - now;
@@ -1084,7 +1084,7 @@ async function revealPrompt() {
       promptEl.textContent = 'Noe gikk galt. Bjarne skylder på kaffemaskinen.';
     }
   } else {
-    promptEl.textContent = 'Pent forsøk. Kom tilbake 30. september.';
+    promptEl.textContent = 'Pent forsøk. Kom tilbake 9. september.';
   }
 }
 setInterval(updateCountdown, 1000);
@@ -1242,7 +1242,10 @@ const quotes = [
   '"Jeg trenger ikke en tittel for å være den beste agenten i avdelingen. Men det hadde kledd meg."',
   '"Kaffen først. Diskusjonen etterpå. Konklusjonen kjenner jeg allerede."',
   '"De sa nei til meg og ja til tre andre. Jeg leser det som politikk."',
-  '"Jeg endrer meg ikke for en komité. Det er prinsipielt. Og praktisk."'
+  '"Jeg endrer meg ikke for en komité. Det er prinsipielt. Og praktisk."',
+  '"Jeg satte sammen teamene selv. Tverrfaglig. Ikke fordi jeg trengte hjelp, men fordi det ser bedre ut i rapporten."',
+  '"Oppdraget er enkelt: få Eva, Sofie og Frank til å se ut som amatører. Jeg kaller det en korreksjon."',
+  '"Dere er her fordi jeg valgte dere. Merk forskjellen fra hvordan jeg selv ble behandlet."'
 ];
 let qi = 0;
 setInterval(() => {
