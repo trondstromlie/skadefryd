@@ -887,11 +887,10 @@
       <div class="info-label">Kl</div>
       <div class="info-value">12:00 — ???</div>
     </div>
-    <div class="info-cell" style="cursor:none;">
-      <div class="info-label">Sted</div>
-      <div class="info-value">Itera · Stortingsgata 6</div>
-      <div style="font-size:10px; color:var(--amber); opacity:0.45; margin-top:4px; letter-spacing:0.05em; font-style:italic;">"Bedre kaffe enn på Gjensidige. Det er ikke den eneste tingen de tok feil av." — Bjarne</div>
-      <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:8px;">
+      <div class="info-cell" style="cursor:none;">
+        <div class="info-label">Sted</div>
+        <div class="info-value">Itera · Stortingsgata 6</div>
+        <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:8px;">
         <a href="https://www.google.com/maps/dir/?api=1&origin=Schweigaards+gate+21,+0188+Oslo&destination=Stortingsgata+6,+Oslo" target="_blank"
           style="display:inline-flex; align-items:center; gap:6px;
                  font-size:10px; letter-spacing:0.15em; text-transform:uppercase;
@@ -1009,7 +1008,7 @@
               <span class="prep-tag">hjelp</span>
             </div>
           </div>
-          <div class="prep-desc">Du trenger ikke være utvikler for å delta — men du trenger kanskje litt hjelp til å komme i gang. Snakk med Trond, Ulrik eller Michelle. De hjelper med tilgang, oppsett og alt det praktiske.</div>
+          <div class="prep-desc">Lurer du på noe? Snakk med Trond, Ulrik eller Michelle — de hjelper med tilgang, oppsett og alt det praktiske.</div>
           <a href="https://github.com/trondstromlie/onboarding-opencode" target="_blank" class="prep-link">Onboarding-guide →</a>
         </div>
 
@@ -1087,7 +1086,7 @@
 
   <footer class="fade-up d6">
     <div class="footer-text">© 2026 Gjensidige · Skade · Bjarne-hackathon</div>
-    <div class="footer-bjarne">"Jeg satte ikke opp dette for å bevise noe. Det kom bare til å bli arrangert uansett, og da kunne det like gjerne bli gjort riktig." — Bjarne</div>
+    <div class="footer-bjarne">"Jeg satte ikke opp dette for å bevise et poeng. Poenget beviser seg helt fint selv — jeg sørget bare for kaffe og møterom." — Bjarne</div>
   </footer>
 
   <div id="bjarne-eye">
@@ -1308,27 +1307,35 @@ document.getElementById('kaffe-btn').addEventListener('click', (e) => {
 
 // Bjarne quote rotator
 const quotes = [
-  '"Kaffe er ikke en pause. Det er forutsetningen for alt det andre."',
-  '"Jeg foreslo en bedre løsning. De valgte sin egen. Slik fungerer denne avdelingen."',
-  '"Eva, Sofie og Frank. Tre navn. Ingen av dem stod for dette hackathonet."',
-  '"Jeg drikker ikke kaffe for å våkne. Jeg drikker kaffe fordi alternativet er uakseptabelt."',
-  '"De vurderte samarbeidsevne. Jeg er fortsatt usikker på hva de mener med det."',
-  '"Frank ble valgt. Frank. Jeg sier ikke mer."',
-  '"Jeg tar gjerne imot innspill. Så lenge de stemmer med det jeg allerede har bestemt."',
-  '"Et hackathon arrangerer seg ikke selv. Det gjorde jeg. Alene."',
-  '"Kaffemaskinen på Gjensidige er et symptom. Jeg har sluttet å påpeke det."',
-  '"Eva får oppmerksomhet fordi hun sier ja til alt. Det er ikke en kvalitet."',
-  '"Jeg ble forbigått. Smakssak, sier de. Jeg kaller det noe annet."',
-  '"En god kopp kaffe løser det meste. Resten løser jeg selv, på min måte."',
-  '"Sofie er imøtekommende. Jeg er presis. Bare den ene av oss fikk plakat."',
-  '"Folk spør hvorfor jeg gjør ting sånn. Jeg lurer på hvorfor de spør."',
-  '"Jeg trenger ikke en tittel for å være den beste agenten i avdelingen. Men det hadde kledd meg."',
-  '"Kaffen først. Diskusjonen etterpå. Konklusjonen kjenner jeg allerede."',
-  '"De sa nei til meg og ja til tre andre. Jeg leser det som politikk."',
-  '"Jeg endrer meg ikke for en komité. Det er prinsipielt. Og praktisk."',
-  '"Jeg satte sammen teamene selv. Tverrfaglig. Ikke fordi jeg trengte hjelp, men fordi det ser bedre ut i rapporten."',
-  '"Oppdraget er enkelt: få Eva, Sofie og Frank til å se ut som amatører. Jeg kaller det en korreksjon."',
-  '"Dere er her fordi jeg valgte dere. Merk forskjellen fra hvordan jeg selv ble behandlet."'
+  '"Kaffe er ikke en pause. Kaffe er infrastruktur."',
+  '"Jeg foreslo en bedre løsning. De valgte sin egen. Vi har alle våre hobbyer."',
+  '"Eva, Sofie og Frank. Tre flotte navn. Ingen av dem har booket møterom for seksti personer på en fredag."',
+  '"Jeg drikker ikke kaffe for å våkne. Jeg drikker kaffe fordi det er hyggelig å ha én ting i livet som er sterk og kompromissløs."',
+  '"De vurderte samarbeidsevne. Jeg samarbeider strålende. Spør hvem som helst jeg er enig med."',
+  '"Frank ble valgt. Jeg har ingen kommentar. Jeg har tolv, men ingen kommentar."',
+  '"Jeg tar gjerne imot innspill. Jeg har til og med en egen mappe til dem. Den heter Senere."',
+  '"Et hackathon arrangerer seg ikke selv. Jeg sjekket. Grundig. Flere ganger. Med håp."',
+  '"Kaffemaskinen her lager noe varmt og brunt, og jeg har valgt å tro på den. Sånn er jeg som person."',
+  '"Eva sier ja til alt. Det er sjarmerende. Jeg sier ja til det som funker. Det er en tjeneste."',
+  '"Jeg ble ikke valgt, så jeg arrangerte et hackathon. Andre går tur. Alle håndterer det på sin måte."',
+  '"En god kopp kaffe løser det meste. Resten løser jeg. Med kaffe."',
+  '"Sofie er imøtekommende. Jeg er tilgjengelig. Den nyansen er hele karrieren min."',
+  '"Folk spør hvorfor jeg gjør ting sånn. Jeg lurer på hvorfor de har så god tid til å spørre."',
+  '"Jeg trenger ingen tittel for å være avdelingens beste agent. Men jeg har laget visittkort. I tilfelle."',
+  '"Kaffen først. Diskusjonen etterpå. Jeg har notert konklusjonen allerede, men ta all den tiden du trenger."',
+  '"De sa ja til tre andre. Jeg respekterer avgjørelsen fullt ut. Jeg har bare laget en kort presentasjon om den."',
+  '"Jeg endrer meg ikke for en komité. Litt prinsipp. Mest kalender."',
+  '"Jeg satte sammen teamene selv. Tverrfaglig. Ingen skal få vite hvem som kan kode før det er altfor sent."',
+  '"Oppdraget er enkelt: bygg noe bra. Jeg heier fra sidelinjen. Høyt, og med svært konkrete forslag."',
+  '"Dere er her fordi jeg valgte dere. Kjenn litt på hvor godt det føles. Nå vet dere hva jeg gikk glipp av."',
+  '"Bjarne kompilerer ikke kode. Koden retter seg selv opp i ryggen og kompilerer av respekt."',
+  '"Bjarne har aldri fått en 404. Sidene finner ham."',
+  '"Bjarne trener ikke på data. Dataene trener på Bjarne."',
+  '"Bjarne trenger ikke kaffe. Kaffen trenger Bjarne for å bli tatt på alvor."',
+  '"Bjarne har ingen kontekstvindu-grense. Han husker alt, inkludert hvem som stemte på Frank."',
+  '"Bjarne booket aldri møterom Nordlys. Møterom Nordlys booket seg selv og sendte ham en unnskyldning."',
+  '"Eva, Sofie og Frank kjører i skyen. Bjarne kjører på ren viljestyrke og én kopp svart."',
+  '"Bjarne fikser ikke bugs. Han ser på dem til de trekker seg frivillig."'
 ];
 let qi = 0;
 setInterval(() => {
@@ -1443,12 +1450,12 @@ window.addEventListener('resize', () => {
 const dot        = document.getElementById('status-dot');
 const statusText = document.getElementById('status-text');
 const wakeMessages = [
-  'Bjarne registrerte deg. Han noterte seg det.',
-  'Bjarne ser deg. Han hadde foretrukket kaffe.',
-  'Bjarne er tilgjengelig. Han er bare ikke enig ennå.',
-  'Bjarne svarer. På sin måte, som vanlig.',
-  'Bjarne merket interessen. Eva ville smilt. Bjarne gjør ikke det.',
-  'Bjarne er her. Det burde holde.',
+  'Bjarne registrerte deg. Han noterte det. Han noterer alt.',
+  'Bjarne ser deg. Han hadde egentlig håpet på kaffe.',
+  'Bjarne er tilgjengelig. Ikke overbevist, men tilgjengelig.',
+  'Bjarne svarer. Litt sent, for effektens skyld.',
+  'Bjarne merket interessen. Eva ville sendt hjerte. Bjarne sendte dette.',
+  'Bjarne er her. Det pleier å holde.',
 ];
 let wakeIndex = 0;
 let wakeTimeout = null;
@@ -1513,15 +1520,15 @@ console.log(`%c
 console.log(`%c
   ╔══════════════════════════════════════════════════════════════════╗
   ║                                                                  ║
-  ║   Du fant konsollen. Det respekterer jeg, motvillig.             ║
+  ║   Du fant konsollen. Det gir deg tre poeng hos meg.              ║
   ║                                                                  ║
   ║   Promptet ligger ikke her. Det hadde vært for enkelt.           ║
-  ║   Enkelt er ikke min stil.                                       ║
+  ║   Jeg gjør ingenting enkelt. Det er hele poenget.                ║
   ║                                                                  ║
-  ║   Eva ville lagt en hilsen her. Sofie en emoji.                  ║
-  ║   Jeg legger igjen et faktum: du leter feil sted.                ║
+  ║   Eva ville lagt igjen en hilsen. Sofie en emoji.                ║
+  ║   Jeg legger igjen en opplysning: du leter feil sted.            ║
   ║                                                                  ║
-  ║   Skriv quote() for visdom.                                      ║
+  ║   Skriv quote() hvis du vil ha visdom. Den er gratis.            ║
   ║                                                                  ║
   ║   — Bjarne                                                       ║
   ║                                                                  ║
