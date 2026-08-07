@@ -456,6 +456,58 @@
     color: var(--rust); opacity: 0.8;
   }
 
+  /* CTA PÅMELDING */
+  .cta-wrap {
+    display: flex; justify-content: center; align-items: center;
+    padding: 4rem 2rem;
+  }
+  .cta-wrap.cta-wrap--bottom {
+    padding: 4rem 2rem 3rem;
+  }
+  .cta-inner {
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 16px;
+    padding: 1.6rem 4.5rem;
+    background: var(--amber);
+    color: #1a0e06;
+    font-family: 'DM Mono', monospace;
+    font-size: 15px; font-weight: 500;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    box-shadow:
+      0 0 24px rgba(201,123,42,0.45),
+      0 0 64px rgba(201,123,42,0.2),
+      inset 0 1px 0 rgba(255,255,255,0.18);
+    animation: cta-pulse 2.8s ease-in-out infinite;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.25s;
+  }
+  @keyframes cta-pulse {
+    0%, 100% { box-shadow: 0 0 24px rgba(201,123,42,0.45), 0 0 64px rgba(201,123,42,0.2), inset 0 1px 0 rgba(255,255,255,0.18); }
+    50%       { box-shadow: 0 0 40px rgba(201,123,42,0.7), 0 0 90px rgba(201,123,42,0.35), inset 0 1px 0 rgba(255,255,255,0.18); }
+  }
+  .cta-btn:hover {
+    background: #e8a83a;
+    transform: translateY(-3px);
+    box-shadow: 0 16px 56px rgba(201,123,42,0.6), 0 0 100px rgba(201,123,42,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+    animation: none;
+  }
+  .cta-btn:active { transform: scale(0.97); animation: none; }
+  .cta-sub {
+    display: block; text-align: center;
+    font-size: 10px; letter-spacing: 0.14em;
+    color: var(--cream); opacity: 0.45;
+    margin-top: 1rem;
+  }
+  .cta-sub {
+    display: block; text-align: center;
+    font-size: 10px; letter-spacing: 0.1em;
+    color: var(--cream); opacity: 0.35;
+    margin-top: 0.75rem;
+  }
+
   /* FOOTER */
   footer {
     margin-top: 4rem;
@@ -817,6 +869,15 @@
     </p>
   </section>
 
+  <div class="cta-wrap fade-up d3">
+    <div class="cta-inner">
+      <a class="cta-btn" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Ik4YgCwHDkSoqSL1K4JkbWgYaRqvzgtKqdvpMW9gIp5UNjlRTFNHVzFaU1Q0STlSMlo1UU5CMUNJOC4u" target="_blank">
+        ☕ Meld deg på
+      </a>
+      <span class="cta-sub">9. september · kl. 12:00</span>
+    </div>
+  </div>
+
   <div class="info-row fade-up d3">
     <div class="info-cell">
       <div class="info-label">Dato</div>
@@ -831,7 +892,7 @@
       <div class="info-value">Itera · Stortingsgata 6</div>
       <div style="font-size:10px; color:var(--amber); opacity:0.45; margin-top:4px; letter-spacing:0.05em; font-style:italic;">"Bedre kaffe enn på Gjensidige. Det er ikke den eneste tingen de tok feil av." — Bjarne</div>
       <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:8px;">
-        <a href="https://www.google.com/maps/dir/?api=1&destination=Stortingsgata+6,+Oslo" target="_blank"
+        <a href="https://www.google.com/maps/dir/?api=1&origin=Schweigaards+gate+21,+0188+Oslo&destination=Stortingsgata+6,+Oslo" target="_blank"
           style="display:inline-flex; align-items:center; gap:6px;
                  font-size:10px; letter-spacing:0.15em; text-transform:uppercase;
                  color:var(--amber); opacity:0.7; text-decoration:none;
@@ -878,6 +939,17 @@
     </div>
   </section>
 
+  </section>
+
+  <div class="cta-wrap fade-up d4">
+    <div class="cta-inner">
+      <a class="cta-btn" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Ik4YgCwHDkSoqSL1K4JkbWgYaRqvzgtKqdvpMW9gIp5UNjlRTFNHVzFaU1Q0STlSMlo1UU5CMUNJOC4u" target="_blank">
+        ☕ Meld deg på
+      </a>
+      <span class="cta-sub">Plassene er begrenset · Bjarne teller</span>
+    </div>
+  </div>
+
   <div class="bjarne-quote-block fade-up d4">
     <div class="bjarne-says-label">Bjarne sier</div>
     <div class="bjarne-says-text" id="bjarne-quote-rotate">
@@ -913,7 +985,7 @@
               <span class="prep-tag">valgfritt</span>
             </div>
           </div>
-          <div class="prep-desc">AI-tjenesten som hackathonet er bygget rundt. Krever <code>az login</code> og intern tilgang. Ikke et krav — men det er her Bjarne holder til, sammen med dem som faktisk ble valgt.</div>
+          <div class="prep-desc">AI-tjenesten som hackathonet er bygget rundt — og der Bjarne holder til. Du må ha Azure-tilgangen <code>GenAI Small Consumer (Prod)</code> for å bruke den. Søk om tilgang i MyAccess så fort som mulig — det kan ta noen dager før du får den.</div>
         </div>
 
         <div class="prep-item">
@@ -924,8 +996,9 @@
               <span class="prep-tag">anbefalt</span>
             </div>
           </div>
-          <div class="prep-desc">Hackathonet er en perfekt mulighet til å prøve AI-assistert koding i terminalen. Lim inn Bjarne-promptet og se hvor det leder. Trenger du hjelp til å installere? Trond har noen triks.</div>
+          <div class="prep-desc">Hackathonet handler om å utforske hva som skjer når utviklere, designere og andre roller jobber sammen med kode og AI. OpenCode er verktøyet som gjør det mulig — uansett bakgrunn. Lim inn Bjarne-promptet og se hvor det leder.</div>
           <a href="https://opencode.ai/" target="_blank" class="prep-link">opencode.ai →</a>
+          <a href="https://github.com/trondstromlie/onboarding-opencode" target="_blank" class="prep-link">Kom i gang med OpenCode →</a>
         </div>
 
         <div class="prep-item">
@@ -936,7 +1009,8 @@
               <span class="prep-tag">hjelp</span>
             </div>
           </div>
-          <div class="prep-desc">Snakk med mine undersåtter Trond, Ulrik eller Michelle. De kan hjelpe med tilgang, oppsett eller andre spørsmål.</div>
+          <div class="prep-desc">Du trenger ikke være utvikler for å delta — men du trenger kanskje litt hjelp til å komme i gang. Snakk med Trond, Ulrik eller Michelle. De hjelper med tilgang, oppsett og alt det praktiske.</div>
+          <a href="https://github.com/trondstromlie/onboarding-opencode" target="_blank" class="prep-link">Onboarding-guide →</a>
         </div>
 
         <div class="prep-item">
@@ -947,7 +1021,7 @@
               <span class="prep-tag">valgfritt</span>
             </div>
           </div>
-          <div class="prep-desc">VS Code, Cursor eller din favoritteditor. Azure CLI for autentisering. Node, Python eller hva du foretrekker. Bjarne bryr seg ikke om stacken. Han har sine egne meninger om alt annet.</div>
+          <div class="prep-desc">VS Code, Cursor eller din favoritteditor. Azure CLI for autentisering. Node, Python eller hva du foretrekker. Bjarne bryr seg ikke om stacken — han bryr seg om hvem som dukker opp.</div>
         </div>
 
       </div>
@@ -1001,6 +1075,15 @@
       </div>
     </div>
   </section>
+
+  <div class="cta-wrap cta-wrap--bottom fade-up d6">
+    <div class="cta-inner">
+      <a class="cta-btn" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Ik4YgCwHDkSoqSL1K4JkbWgYaRqvzgtKqdvpMW9gIp5UNjlRTFNHVzFaU1Q0STlSMlo1UU5CMUNJOC4u" target="_blank">
+        ☕ Meld deg på
+      </a>
+      <span class="cta-sub">9. september · Bjarne venter</span>
+    </div>
+  </div>
 
   <footer class="fade-up d6">
     <div class="footer-text">© 2026 Gjensidige · Skade · Bjarne-hackathon</div>
