@@ -456,6 +456,35 @@
     color: var(--rust); opacity: 0.8;
   }
 
+  /* CTA PÅMELDING */
+  .cta-wrap {
+    display: flex; justify-content: center;
+    padding: 2rem 2rem 0;
+  }
+  .cta-wrap.cta-wrap--bottom {
+    padding: 2.5rem 2rem 0;
+  }
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 0.85rem 2rem;
+    background: var(--amber);
+    color: #1a0e06;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .cta-btn:hover { background: #e8a83a; transform: translateY(-1px); }
+  .cta-btn:active { transform: scale(0.97); }
+  .cta-sub {
+    display: block; text-align: center;
+    font-size: 10px; letter-spacing: 0.1em;
+    color: var(--cream); opacity: 0.35;
+    margin-top: 0.6rem;
+  }
+
   /* FOOTER */
   footer {
     margin-top: 4rem;
@@ -817,6 +846,15 @@
     </p>
   </section>
 
+  <div class="cta-wrap fade-up d3">
+    <div>
+      <a class="cta-btn" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Ik4YgCwHDkSoqSL1K4JkbWgYaRqvzgtKqdvpMW9gIp5UNjlRTFNHVzFaU1Q0STlSMlo1UU5CMUNJOC4u" target="_blank">
+        ☕ Meld deg på
+      </a>
+      <span class="cta-sub">Gratis · Bjarne stiller kaffe</span>
+    </div>
+  </div>
+
   <div class="info-row fade-up d3">
     <div class="info-cell">
       <div class="info-label">Dato</div>
@@ -878,6 +916,17 @@
     </div>
   </section>
 
+  </section>
+
+  <div class="cta-wrap fade-up d4">
+    <div>
+      <a class="cta-btn" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Ik4YgCwHDkSoqSL1K4JkbWgYaRqvzgtKqdvpMW9gIp5UNjlRTFNHVzFaU1Q0STlSMlo1UU5CMUNJOC4u" target="_blank">
+        ☕ Meld deg på
+      </a>
+      <span class="cta-sub">Plassene er begrenset · Bjarne teller</span>
+    </div>
+  </div>
+
   <div class="bjarne-quote-block fade-up d4">
     <div class="bjarne-says-label">Bjarne sier</div>
     <div class="bjarne-says-text" id="bjarne-quote-rotate">
@@ -926,6 +975,7 @@
           </div>
           <div class="prep-desc">Hackathonet er en perfekt mulighet til å prøve AI-assistert koding i terminalen. Lim inn Bjarne-promptet og se hvor det leder. Trenger du hjelp til å installere? Trond har noen triks.</div>
           <a href="https://opencode.ai/" target="_blank" class="prep-link">opencode.ai →</a>
+          <a href="https://github.com/trondstromlie/onboarding-opencode" target="_blank" class="prep-link">Kom i gang med OpenCode →</a>
         </div>
 
         <div class="prep-item">
@@ -936,7 +986,8 @@
               <span class="prep-tag">hjelp</span>
             </div>
           </div>
-          <div class="prep-desc">Snakk med mine undersåtter Trond, Ulrik eller Michelle. De kan hjelpe med tilgang, oppsett eller andre spørsmål.</div>
+          <div class="prep-desc">Snakk med mine undersåtter Trond, Ulrik eller Michelle. De kan hjelpe med tilgang, oppsett eller andre spørsmål. Trenger du å sette opp OpenCode eller søke om tilganger, følg oppskriften i onboarding-repoet.</div>
+          <a href="https://github.com/trondstromlie/onboarding-opencode" target="_blank" class="prep-link">Onboarding-guide →</a>
         </div>
 
         <div class="prep-item">
@@ -1001,6 +1052,17 @@
       </div>
     </div>
   </section>
+
+  </section>
+
+  <div class="cta-wrap cta-wrap--bottom fade-up d6">
+    <div>
+      <a class="cta-btn" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Ik4YgCwHDkSoqSL1K4JkbWgYaRqvzgtKqdvpMW9gIp5UNjlRTFNHVzFaU1Q0STlSMlo1UU5CMUNJOC4u" target="_blank">
+        ☕ Meld deg på
+      </a>
+      <span class="cta-sub">9. september · Stortingsgata 6 · Bjarne venter</span>
+    </div>
+  </div>
 
   <footer class="fade-up d6">
     <div class="footer-text">© 2026 Gjensidige · Skade · Bjarne-hackathon</div>
