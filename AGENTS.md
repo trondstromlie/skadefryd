@@ -1000,7 +1000,7 @@ designvalg som er tatt. **Les den før du endrer tekst.**
 | Fil | Hva det er |
 |-----|-----------|
 | `index.html` | **Hele siden.** HTML, CSS og JavaScript i samme fil, ~1450 linjer |
-| `assets/f.bin` | Det ekte oppdragspromptet, base64-encodet. Røres ikke |
+| `assets/f.bin` | Base64-encodet påskeegg-melding til den som graver den frem |
 | `CNAME` | Domenet (`skadefryd.tech`). **Slettes aldri** — da faller domenet ned |
 | `CLAUDE.md` | Premiss, tone, designvalg, kjente quirks |
 | `AGENTS.md` | Denne fila |
@@ -1091,8 +1091,9 @@ i kanten (dekorasjon, ikon, absolutt posisjonert element), **sjekk 375px før du
 sarkastiske Bjarne-meldinger. De er lagt inn med vilje, for nysgjerrige som inspiserer
 kilden. **Ikke fjern dem, ikke «forenkle» dem, ikke forklar dem i en kommentar.**
 
-Det ekte promptet ligger i `assets/f.bin` og dekodes automatisk når datoen er passert.
-**Ikke dekode og lim det inn i klartekst i `index.html`.**
+`assets/f.bin` inneholder ikke lenger det ekte oppdragspromptet, men en påskeegg-melding
+til den som klarer å dekode den. Den dekodes også automatisk når datoen er passert.
+**Ikke lim innholdet inn i klartekst i `index.html`.**
 
 ### Datoen
 

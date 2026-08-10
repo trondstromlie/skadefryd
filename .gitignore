@@ -1,0 +1,6 @@
+# Verktøyartefakter
+.omo/
+.playwright-mcp/
+
+# macOS
+.DS_Store

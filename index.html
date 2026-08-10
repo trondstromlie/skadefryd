@@ -1162,7 +1162,7 @@ async function revealPrompt() {
   if (new Date() >= target) {
     try {
       const d = _cached || await fetch('assets/f.bin').then(r => r.text());
-      promptEl.textContent = atob(d.trim());
+      promptEl.textContent = new TextDecoder().decode(Uint8Array.from(atob(d.trim()), c => c.charCodeAt(0)));
     } catch (e) {
       promptEl.textContent = 'Noe gikk galt. Bjarne skylder på kaffemaskinen.';
     }

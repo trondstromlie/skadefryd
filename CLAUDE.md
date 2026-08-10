@@ -100,6 +100,6 @@ git push
 
 ## Promptet er automatisk skjult
 
-Det ekte oppdragspromptet ligger base64-encodet i `assets/f.bin` og dekodes kun når datoen 30. september 2026 er passert. Ingen manuell handling kreves.
+`assets/f.bin` inneholder ikke lenger det ekte oppdragspromptet — det er byttet ut med en base64-encodet påskeegg-melding: den som graver frem og dekoder fila får beskjed om å ta et skjermbilde og sende det til Trond på Slack. Fila dekodes uansett automatisk når datoen 30. september 2026 er passert.
 
 `_manifest`, `_0x`, `_secret` og `data-token` i koden er bevisste feller — base64-strenger som dekoder til korte, sarkastiske Bjarne-meldinger ("riktig variabel, feil innhold" osv.), ikke det ekte promptet. Utviklere som inspiserer kildekoden og prøver å dekode dem manuelt... vel, de har fortjent svaret de får.
