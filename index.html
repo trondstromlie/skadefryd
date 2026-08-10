@@ -638,6 +638,7 @@
   }
   .cta-inner {
     display: flex; flex-direction: column; align-items: center;
+    isolation: isolate;
   }
   .cta-btn {
     display: inline-flex; align-items: center; gap: 16px;
@@ -656,6 +657,7 @@
       inset 0 1px 0 rgba(255,255,255,0.15);
     animation: cta-pulse 2.8s ease-in-out infinite, gradshift 4s ease infinite;
     transition: transform 0.15s, box-shadow 0.25s;
+    will-change: transform;
   }
   @keyframes gradshift {
     0%,100% { background-position: 0% 50%; }
@@ -678,6 +680,111 @@
     margin-top: 0.75rem;
   }
 
+  /* HERO RAD: knapp + collab side om side */
+  .hero-row {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    margin: 0 3rem 4rem;
+  }
+  .hero-row .cta-inner {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    flex: 0 0 auto;
+    padding: 3rem 4rem;
+    border: 1px solid rgba(124,92,252,0.15);
+    background: var(--ai-dim);
+    backdrop-filter: blur(12px);
+    border-left: none;
+    isolation: isolate;
+  }
+  .hero-row .collab-inner {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: none;
+    border-right: none;
+    text-align: left;
+  }
+  .hero-row .collab-heading {
+    text-align: left;
+  }
+  .hero-row .collab-pills {
+    justify-content: flex-start;
+  }
+  @media (max-width: 768px) {
+    .hero-row {
+      flex-direction: column;
+      margin: 0 1.25rem 2rem;
+    }
+    .hero-row .cta-inner {
+      border-right: 1px solid rgba(124,92,252,0.15);
+      border-bottom: none;
+      padding: 2rem 1.5rem;
+    }
+    .hero-row .collab-inner {
+      text-align: center;
+    }
+    .hero-row .collab-heading,
+    .hero-row .collab-pills {
+      text-align: center;
+      justify-content: center;
+    }
+  }
+
+  /* SAMARBEID-SEKSJON */
+  .collab-section {
+    padding: 3rem 3rem 2rem;
+    display: flex; justify-content: center;
+  }
+  .collab-inner {
+    max-width: 600px; width: 100%;
+    text-align: center;
+    border: 1px solid rgba(124,92,252,0.15);
+    background: var(--ai-dim);
+    backdrop-filter: blur(12px);
+    padding: 3rem 4rem;
+  }
+  .collab-label {
+    font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--ai-light); opacity: 0.7; margin-bottom: 1rem;
+  }
+  .collab-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 6vw, 3rem);
+    color: var(--cream); letter-spacing: 0.04em;
+    margin: 0 0 1.5rem;
+    line-height: 1;
+  }
+  .collab-body {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px; line-height: 1.75;
+    color: var(--cream); opacity: 0.75;
+    margin-bottom: 2rem;
+  }
+  .collab-pills {
+    display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .collab-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(124,92,252,0.35);
+    color: var(--ai-light);
+    background: rgba(124,92,252,0.08);
+  }
+  .collab-bjarne {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--amber); opacity: 0.75;
+    margin: 0;
+  }
+  @media (max-width: 640px) {
+    .collab-section { padding: 1.5rem 1.25rem 1rem; }
+    .collab-inner { padding: 2rem 1.5rem; }
+  }
+
   /* GLEDER DU DEG BOKS */
   .rsvp-section {
     padding: 2rem 3rem 4rem;
@@ -691,7 +798,7 @@
     max-width: 520px; width: 100%;
     text-align: center;
     position: relative;
-    min-height: 200px;
+    min-height: 260px;
     box-shadow: 0 0 60px rgba(124,92,252,0.06);
   }
   .rsvp-question {
@@ -741,7 +848,7 @@
   }
   .rsvp-no.escaping {
     position: absolute;
-    transition: left 0.12s ease, top 0.12s ease;
+    transition: left 0.18s cubic-bezier(0.25,1.5,0.5,1), top 0.18s cubic-bezier(0.25,1.5,0.5,1);
     z-index: 10;
   }
   .rsvp-yes-msg {
@@ -1136,12 +1243,61 @@
     </p>
   </section>
 
-  <div class="cta-wrap fade-up d3">
+  <!-- ref: RHUgZXIgdmFybS4gRm9ydHNhdHQgZmVpbCwgbWVuIHZhcm0uIEplZyBzaWVyIGlra2UgbWVyLiDigJQgQmphcm5l -->
+  <section class="countdown-section fade-up d3">
+    <div class="countdown-label">Nedtelling til Bjarne beviser et poeng</div>
+    <div class="countdown">
+      <div class="count-unit">
+        <span class="count-num" id="cd-days">--</span>
+        <span class="count-lbl">dager</span>
+      </div>
+      <div class="count-unit">
+        <span class="count-num" id="cd-hours">--</span>
+        <span class="count-lbl">timer</span>
+      </div>
+      <div class="count-unit">
+        <span class="count-num" id="cd-mins">--</span>
+        <span class="count-lbl">min</span>
+      </div>
+      <div class="count-unit">
+        <span class="count-num" id="cd-secs">--</span>
+        <span class="count-lbl">sek</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="hero-row fade-up d3">
+    <div class="collab-inner">
+      <div class="collab-label">Hvem er dette for</div>
+      <h2 class="collab-heading">Alle.</h2>
+      <p class="collab-body">Dette hackathonet er ikke kun for utviklere. Det handler om å tenke sammen, og bruke AI til å bygge noe som faktisk betyr noe, SAMMEN.<br><br>Skadefryd skal være en start på å styrke tverrfaglige team og finne ut hvordan vi bedre kan jobbe sammen. Domenekunnskapen, brukerforståelsen og det tekniske samles til geniale idéer. Bjarne stiller med verktøyene, dere stiller med hodene.</p>
+      <div class="collab-pills">
+        <span class="collab-pill">Ingen kodeerfaring nødvendig</span>
+        <span class="collab-pill">Tverrfaglige team</span>
+        <span class="collab-pill">Samarbeid > kode</span>
+        <span class="collab-pill">Alle er velkomne</span>
+      </div>
+      <p class="collab-bjarne">"Jeg trenger ikke at dere kan kode. Jeg trenger at dere kan tenke. Koden ordner jeg." — Bjarne</p>
+    </div>
     <div class="cta-inner">
       <a class="cta-btn" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Ik4YgCwHDkSoqSL1K4JkbWgYaRqvzgtKqdvpMW9gIp5UNjlRTFNHVzFaU1Q0STlSMlo1UU5CMUNJOC4u" target="_blank">
         ☕ Meld deg på
       </a>
       <span class="cta-sub">9. september · kl. 12:00</span>
+    </div>
+  </div>
+
+  <div class="rsvp-section fade-up d3">
+    <div class="rsvp-box">
+      <div class="rsvp-question">Gleder du deg til hackathon?</div>
+      <span class="rsvp-sub">Viktig spørsmål · Svar med omhu</span>
+      <div class="rsvp-btns" id="rsvp-btns">
+        <button class="rsvp-yes" id="rsvp-yes">Ja ☕</button>
+        <button class="rsvp-no" id="rsvp-no">Nei</button>
+      </div>
+      <div class="rsvp-yes-msg" id="rsvp-yes-msg">
+        Visste det. Bjarne er fornøyd — men sier ingenting.
+      </div>
     </div>
   </div>
 
@@ -1183,30 +1339,6 @@
     </div>
   </div>
 
-  <!-- ref: RHUgZXIgdmFybS4gRm9ydHNhdHQgZmVpbCwgbWVuIHZhcm0uIEplZyBzaWVyIGlra2UgbWVyLiDigJQgQmphcm5l -->
-  <section class="countdown-section fade-up d3">
-    <div class="countdown-label">Nedtelling til Bjarne beviser et poeng</div>
-    <div class="countdown">
-      <div class="count-unit">
-        <span class="count-num" id="cd-days">--</span>
-        <span class="count-lbl">dager</span>
-      </div>
-      <div class="count-unit">
-        <span class="count-num" id="cd-hours">--</span>
-        <span class="count-lbl">timer</span>
-      </div>
-      <div class="count-unit">
-        <span class="count-num" id="cd-mins">--</span>
-        <span class="count-lbl">min</span>
-      </div>
-      <div class="count-unit">
-        <span class="count-num" id="cd-secs">--</span>
-        <span class="count-lbl">sek</span>
-      </div>
-    </div>
-  </section>
-
-  </section>
 
   <div class="cta-wrap fade-up d4">
     <div class="cta-inner">
@@ -1349,20 +1481,6 @@
         ☕ Meld deg på
       </a>
       <span class="cta-sub">9. september · Bjarne venter</span>
-    </div>
-  </div>
-
-  <div class="rsvp-section fade-up d6">
-    <div class="rsvp-box">
-      <div class="rsvp-question">Gleder du deg til hackathon?</div>
-      <span class="rsvp-sub">Viktig spørsmål · Svar med omhu</span>
-      <div class="rsvp-btns" id="rsvp-btns">
-        <button class="rsvp-yes" id="rsvp-yes">Ja ☕</button>
-        <button class="rsvp-no" id="rsvp-no">Nei</button>
-      </div>
-      <div class="rsvp-yes-msg" id="rsvp-yes-msg">
-        Visste det. Bjarne er fornøyd — men sier ingenting.
-      </div>
     </div>
   </div>
 
@@ -1842,10 +1960,10 @@ window.quote = function() {
     const boxR = box.getBoundingClientRect();
     const w    = noBtn.offsetWidth;
     const h    = noBtn.offsetHeight;
-    const pad  = 10;
+    const pad  = 12;
 
     if (!hasEscaped) {
-      // Frys knappens posisjon relativt til .rsvp-box og bytt til absolute
+      // Frys til absolutt posisjon inni boksen
       const r = noBtn.getBoundingClientRect();
       noBtn.style.left   = (r.left - boxR.left) + 'px';
       noBtn.style.top    = (r.top  - boxR.top)  + 'px';
@@ -1855,30 +1973,35 @@ window.quote = function() {
       hasEscaped = true;
     }
 
-    const maxX = boxR.width  - w - pad;
-    const maxY = boxR.height - h - pad;
-
     // Kursorposisjon relativt til boksen
     const relCX = cursorX - boxR.left;
     const relCY = cursorY - boxR.top;
 
-    let nx, ny, attempts = 0;
+    const maxX = boxR.width  - w - pad;
+    const maxY = box.offsetHeight - h - pad;
+
+    // Finn en posisjon som er langt nok unna cursoren
+    let nx, ny, attempts = 0, minDist = Math.min(boxR.width, box.offsetHeight) * 0.4;
     do {
       nx = pad + Math.random() * Math.max(0, maxX - pad);
       ny = pad + Math.random() * Math.max(0, maxY - pad);
       attempts++;
     } while (
-      Math.abs(nx - relCX) < w + 40 &&
-      Math.abs(ny - relCY) < h + 40 &&
-      attempts < 20
+      Math.hypot(nx - relCX, ny - relCY) < minDist &&
+      attempts < 30
     );
 
     noBtn.style.left = nx + 'px';
     noBtn.style.top  = ny + 'px';
   }
 
-  noBtn.addEventListener('mouseenter', function(e) {
-    moveAway(e.clientX, e.clientY);
+  // Flykt kontinuerlig når musen er nær
+  document.addEventListener('mousemove', function(e) {
+    if (!noBtn || noBtn.style.display === 'none') return;
+    const r = noBtn.getBoundingClientRect();
+    const nearX = e.clientX > r.left - 40 && e.clientX < r.right  + 40;
+    const nearY = e.clientY > r.top  - 40 && e.clientY < r.bottom + 40;
+    if (nearX && nearY) moveAway(e.clientX, e.clientY);
   });
   noBtn.addEventListener('touchstart', function(e) {
     const t = e.touches[0];
