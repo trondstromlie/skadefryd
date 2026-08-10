@@ -1033,13 +1033,39 @@ i kopien; bruk dem gjerne i nye sitater for å holde sjalusi-twisten synlig.
 | **Bjarne-sitater** | 18 sitater roterer hvert 6. sekund med fade. Kaffe (hovedvekt), hackathonet, AI-selvbilde, og — uten å forklare det — avvisningen av samarbeid og teorien om hvorfor han ikke ble valgt |
 | **Forberedelser** | Tilgang til genai.gjensidige.no (valgfritt, krever `az login`), OpenCode (anbefalt verktøy), kontakt Trond eller Ulrik, andre verktøy (VS Code, Cursor, Azure CLI, Node, Python) |
 | **Features-grid** | 7 fiktive AI-features Bjarne aldri ble bedt om å bygge: Kaffekorrelasjon™, Sukk-detektor, Unngåelsesindeks, Bjarne spår fremtiden, Effektivitetsrapporten, Kaffekritisk varsel, Kjendis-tracker (teller omtaler av Eva/Sofie/Frank mot Bjarnes eget tall) |
+| **Kioskmodus** | Egen fullskjermvisning for skjermer i fellesarealer, se under |
+
+## Kioskmodus
+
+Legg `?kiosk=true` bak adressen — `https://skadefryd.tech/?kiosk=true` — så bytter siden til
+en visning laget for en skjerm som henger på veggen: stor nedtelling, dato og sted, og en
+QR-kode til påmeldingsskjemaet. Ingenting annet.
+
+- Den vanlige forsiden skjules med CSS (`html.kiosk body > *:not(#kiosk)`), og hele
+  hovedskriptet hoppes over. Ingen energimåler, ingen partikler, ingen canvas som tegner —
+  skjermen skal kunne stå på i ukevis.
+- Musepekeren er skjult, men kommer fram så snart noen beveger musen og forsvinner igjen
+  etter tre sekunder.
+- Ligger skjermen i portrett, stables innholdet automatisk.
+- `?kiosk=false` og `?kiosk=0` gir vanlig forside, slik at lenken kan skrus av uten å endres.
+
+**QR-koden er ikke et bilde.** Den regnes ut i nettleseren av en liten QR-koder nederst i
+`index.html`, og lenken hentes fra påmeldingsknappen på forsiden. Endrer du den knappen,
+følger QR-koden etter av seg selv — det finnes ingen bildefil å huske på.
+
+Skal du endre størrelsen på koden: den slutter å la seg skanne under ca. 150 px. Dagens
+`38vmin` gir rundt 410 px på en 1080p-skjerm, altså nesten tre ganger margin. Blir
+påmeldingslenken lengre, blir koden tettere og trenger mer plass.
 
 ## Designvalg
 
 - **Fonter:** Bebas Neue (overskrifter), DM Serif Display (sitater/italic), DM Mono
   (brødtekst og kode).
-- **Farger:** `--espresso: #1A0E06`, `--cream: #F5ECD7`, `--amber: #C97B2A`,
-  `--rust: #8B3A1A`.
+- **Farger:** bakgrunnen er midnattsblå, ikke brun — `--bg`/`--espresso: #0B0D1A`,
+  `--cream: #F0EAD6`, `--amber: #C97B2A`, `--amber-light: #E8A94A`, `--rust: #8B3A1A`.
+  I tillegg finnes AI-aksentene `--ai: #7C5CFC` og `--ai-light: #A78BFA`, og høstfargene
+  `--forest`, `--ochre`, `--terra`. **`index.html` er fasit** — les `:root` der før du
+  bruker en farge herfra.
 - **Custom cursor** — skjules automatisk på touch-enheter (`@media (pointer: coarse)`).
 - **Damppartikler** — animerer oppover fra bunnen, begrenset til 5–95 % av bredden for å
   unngå overflow.
