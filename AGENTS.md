@@ -34,6 +34,7 @@ gjennom en PR, og alt som noen gang har ligget i repoet kan hentes tilbake.
 | [Bagatellene](#bagatellene--alt-utviklere-glemmer-å-fortelle) | Alt «alle vet» som ingen sier høyt |
 | [Angrekurset](#angrekurset--jeg-gjorde-noe-feil-hva-nå) | Når noe har gått galt |
 | [Hva dette repoet er](#hva-dette-repoet-er) | Prosjektet, filene, publisering |
+| [Hvem Bjarne er](#hvem-bjarne-er--les-dette-før-du-endrer-tekst) | Premiss, persona og tone — les før du endrer tekst |
 | [Testing](#testing--obligatorisk-før-du-sier-deg-ferdig) | Hvordan se at det virker |
 | [Feller i akkurat dette repoet](#feller-i-akkurat-dette-repoet) | Ting som er spesielt her |
 | [Kommandokart](#kommandokart--jukselapp) | Jukselapp |
@@ -429,7 +430,7 @@ vanligste grunnen til at en PR ikke lar seg merge.
 
 Alt ligger i `index.html` — HTML, CSS og JavaScript i samme fil. Les
 [Feller i akkurat dette repoet](#feller-i-akkurat-dette-repoet) før du endrer layout,
-og [CLAUDE.md](CLAUDE.md) for tone og innhold.
+og [Hvem Bjarne er](#hvem-bjarne-er--les-dette-før-du-endrer-tekst) for tone og innhold.
 
 Ett prinsipp som gjelder gjennomgående: **det er ingen byggsteg og ingen tester.** En
 skrivefeil i HTML-en blir ikke fanget av noe verktøy — den går rett på lufta når PR-en
@@ -985,8 +986,7 @@ echo ".DS_Store" >> .gitignore
 # Hva dette repoet er
 
 Hackathon-landingssiden for **Skadefryd med Bjarne** — et internt arrangement i Gjensidige
-Skade. Se [CLAUDE.md](CLAUDE.md) for premisset, tone of voice, hvem Bjarne er og hvilke
-designvalg som er tatt. **Les den før du endrer tekst.**
+Skade, **9. september 2026 kl. 12:00 hos Itera** (Stortingsgata 6, Oslo).
 
 | | |
 |---|---|
@@ -995,6 +995,58 @@ designvalg som er tatt. **Les den før du endrer tekst.**
 | **Stack** | Én statisk `index.html`. Ingen rammeverk, ingen pakker, ingen byggsteg |
 | **Tester** | Ingen. Nettleseren er fasiten |
 
+> **Merk:** Det finnes også et `skadefryd`-repo under Gjensidige-organisasjonen på GitHub.
+> Det er **arkivert og skal ikke brukes**. Alt arbeid — branches, PR-er, issues — går mot
+> `trondstromlie/skadefryd`. Er du i tvil: `git remote -v` er fasit.
+
+## Hvem Bjarne er — les dette før du endrer tekst
+
+Bjarne er en fiktiv AI-agent, og han er hele premisset for hackathonet. **Eva**, **Sofie** og
+**Frank** er Skades offisielle AI-kjendiser — interne AI-persona som faktisk ble valgt ut av
+Skade. Bjarne ble ikke valgt. Det er bakhistorien.
+
+Bjarne er:
+
+- Teknisk kompetent, men foretrekker å drikke kaffe fremfor å jobbe. Dette er hovedtrekket,
+  og det er det energimåleren, kaffekrisa og kaffeknappen handler om.
+- Vrang og lite samarbeidsvillig — avviser innspill, insisterer på sin egen metode.
+- Fullstendig blind for at punktet over er *grunnen* til at han ikke ble valgt som
+  AI-kjendis. Han har sin egen teori (politikk, smak, urettferdighet) og nevner den gjerne.
+- Sarkastisk, selvsikker, alltid kortfattet. Svarer alltid på norsk.
+
+**Premisset:** Hackathonet er ikke offisielt sanksjonert av Gjensidige. Bjarne satte det opp
+selv, som et eget PR-stunt for å bevise at han fortjener en plass blant kjendisene. Ingen ba
+ham om det.
+
+**Tonen er tørr og underdreven.** Unngå forklarende humor — la Bjarne snakke for seg selv.
+Ironien (at hans egen vrangvilje er grunnen til snubben) skal *vises* gjennom hans egne
+uttalelser, aldri forklares. Bjarne skal **aldri** få en innsikt eller oppvåkning om dette —
+han er overbevist om sin egen rett gjennom hele teksten. Eva, Sofie og Frank navngis direkte
+i kopien; bruk dem gjerne i nye sitater for å holde sjalusi-twisten synlig.
+
+## Hva som er på siden
+
+| Del | Hva den gjør |
+|-----|--------------|
+| **Energimåler** (fast topplinje) | Bjarnes energinivå 0–100, tømmes 1 poeng hvert 8. sekund. Knappen «☕ Gi Bjarne en kaffe før han sovner» gir +25. Under 20: rød pulserende advarsel. På 0 tar en Windows-BSOD over hele skjermen (`CAFFEINE_LEVEL_CRITICAL`) med restart-knapp som gir 60. Lagres i `localStorage` (`bjarne_energy`, `bjarne_energy_ts`) |
+| **Nedtelling** | Teller ned til 9. september 2026 kl. 12:00 (`index.html` er fasit, se [Datoen](#datoen)). Når målet nås åpnes den låste «oppdrag»-seksjonen automatisk |
+| **Bjarne-sitater** | 18 sitater roterer hvert 6. sekund med fade. Kaffe (hovedvekt), hackathonet, AI-selvbilde, og — uten å forklare det — avvisningen av samarbeid og teorien om hvorfor han ikke ble valgt |
+| **Forberedelser** | Tilgang til genai.gjensidige.no (valgfritt, krever `az login`), OpenCode (anbefalt verktøy), kontakt Trond eller Ulrik, andre verktøy (VS Code, Cursor, Azure CLI, Node, Python) |
+| **Features-grid** | 7 fiktive AI-features Bjarne aldri ble bedt om å bygge: Kaffekorrelasjon™, Sukk-detektor, Unngåelsesindeks, Bjarne spår fremtiden, Effektivitetsrapporten, Kaffekritisk varsel, Kjendis-tracker (teller omtaler av Eva/Sofie/Frank mot Bjarnes eget tall) |
+
+## Designvalg
+
+- **Fonter:** Bebas Neue (overskrifter), DM Serif Display (sitater/italic), DM Mono
+  (brødtekst og kode).
+- **Farger:** `--espresso: #1A0E06`, `--cream: #F5ECD7`, `--amber: #C97B2A`,
+  `--rust: #8B3A1A`.
+- **Custom cursor** — skjules automatisk på touch-enheter (`@media (pointer: coarse)`).
+- **Damppartikler** — animerer oppover fra bunnen, begrenset til 5–95 % av bredden for å
+  unngå overflow.
+- **Mobil (≤640px):** energibaren stables vertikalt (spor øverst, knapp under, full bredde),
+  kafferingen skjules, info-cellene (dato/sted/etc.) vises én per rad med horisontal
+  skillelinje, og padding er redusert gjennomgående.
+
 ## Filene
 
 | Fil | Hva det er |
@@ -1002,8 +1054,8 @@ designvalg som er tatt. **Les den før du endrer tekst.**
 | `index.html` | **Hele siden.** HTML, CSS og JavaScript i samme fil, ~1450 linjer |
 | `assets/f.bin` | Base64-encodet påskeegg-melding til den som graver den frem |
 | `CNAME` | Domenet (`skadefryd.tech`). **Slettes aldri** — da faller domenet ned |
-| `CLAUDE.md` | Premiss, tone, designvalg, kjente quirks |
-| `AGENTS.md` | Denne fila |
+| `AGENTS.md` | **Denne fila — eneste kilde til sannhet.** Alt om prosjektet står her |
+| `CLAUDE.md` | Bare en peker hit. Ikke dupliser innhold dit |
 
 ## Se siden lokalt
 
@@ -1014,8 +1066,9 @@ ekte server. Full oppskrift med feller og mobilvisning:
 ## Språk
 
 All tekst på siden er på **norsk**, og tonen er tørr og underdreven. Endrer du tekst, les
-[CLAUDE.md](CLAUDE.md) først — Bjarne har en bestemt stemme, og han skal aldri få en
-oppvåkning om hvorfor han ikke ble valgt.
+[Hvem Bjarne er](#hvem-bjarne-er--les-dette-før-du-endrer-tekst) først — Bjarne har en
+bestemt stemme, og han skal aldri få en oppvåkning om hvorfor han ikke ble valgt. All tekst
+er gjennomgått med Claude Opus; bruk Opus for språklige endringer.
 
 ---
 
@@ -1099,10 +1152,8 @@ til den som klarer å dekode den. Den dekodes også automatisk når datoen er pa
 
 Fasiten er `index.html`, linje ~1045: `new Date('2026-09-09T12:00:00')`, og datoteksten
 lenger opp i dokumentet. Endres datoen, må **begge** oppdateres — nedtellingen og den
-synlige teksten er to forskjellige steder.
-
-> Merk: `CLAUDE.md` nevner 30. september flere steder. Det er utdatert — `index.html` er
-> fasiten. Skal datoen endres, oppdater begge filene i samme PR.
+synlige teksten er to forskjellige steder. Datoen står også i
+[Hva dette repoet er](#hva-dette-repoet-er) her i AGENTS.md; oppdater den i samme PR.
 
 ### Energimåler-layouten
 
