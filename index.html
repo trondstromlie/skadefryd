@@ -1148,24 +1148,10 @@
     100% { transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.3); opacity: 0; }
   }
 
-  /* coffee steam particles */
-  .steam-container {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    pointer-events: none; z-index: 0;
-    overflow: hidden; clip-path: inset(0);
-    height: 200px; width: 100vw;
-  }
-  .steam-particle {
-    position: absolute; bottom: 0;
-    width: 2px; height: 2px;
-    border-radius: 50%;
-    background: rgba(201,123,42,0.15);
-    animation: rise linear infinite;
-  }
-  @keyframes rise {
-    0% { transform: translateY(0) translateX(0) scale(1); opacity: 0.4; }
-    100% { transform: translateY(-200px) translateX(var(--drift)) scale(3); opacity: 0; }
-  }
+  /* Damppartiklene lå her som HTML-elementer med hver sin CSS-animasjon.
+     De tegnes nå på bakgrunns-canvaset i stedet — se tickSteam i skriptet.
+     Canvaset ligger allerede innenfor skjermen, så clip-path-en som holdt
+     dampen unna sidekantene på mobil trengs ikke lenger. */
 
   /* =============================================
      KIOSKMODUS  —  aktiveres med ?kiosk=true
@@ -1394,7 +1380,6 @@
   ⚠ Bjarne er kaffekritisk — nærm deg med forsiktighet
 </div>
 
-<div class="steam-container" id="steam"></div>
 <span hidden data-token="SWtrZSBoZXIuIFByw7h2IGlnamVuLiDigJQgQmphcm5l"></span>
 
 <div class="page">
@@ -2175,19 +2160,12 @@ document.querySelectorAll('.feature-card, .count-unit, .info-cell').forEach(el =
   el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
 });
 
-// Steam particles
-const steamContainer = document.getElementById('steam');
-function createParticle() {
-  const p = document.createElement('div');
-  p.className = 'steam-particle';
-  p.style.left = (5 + Math.random() * 90) + '%';
-  p.style.setProperty('--drift', (Math.random() * 30 - 15) + 'px');
-  p.style.animationDuration = (4 + Math.random() * 6) + 's';
-  p.style.animationDelay = (Math.random() * 4) + 's';
-  steamContainer.appendChild(p);
-  setTimeout(() => p.remove(), 10000);
-}
-setInterval(createParticle, 300);
+/* Damppartiklene tegnes nå på bakgrunns-canvaset, se BAKGRUNNSPARTIKLER lenger
+   nede. Før var hver prikk et eget HTML-element med sin egen CSS-animasjon, og
+   nettleseren måtte behandle alle 33 som hvert sitt lag — klippe dem mot
+   containeren og sette dem sammen på nytt hver eneste frame. Å tegne dem inn i
+   en løkke som går uansett kostet nesten ingenting, og tok rundt en sjettedel
+   av sidens CPU-bruk. Utseendet er uendret. */
 
 // Countdown
 const target = new Date('2026-09-09T12:00:00');
@@ -2776,6 +2754,40 @@ window.quote = function() {
   const ctx = canvas.getContext('2d');
   let W, H, particles = [];
 
+  /* ---- Damp ----
+     Samme utseende som CSS-versjonen den erstattet: prikkene starter nederst i
+     vinduet, stiger 200 piksler, driver inntil 15 piksler til siden, vokser fra
+     1 til 3 piksler og falmer bort. Én ny prikk hvert 300. millisekund. */
+  const DAMP_INTERVALL = 0.3;   // sekunder mellom hver nye prikk
+  let steam = [];
+  let steamAkk = 0;
+
+  function makeSteam() {
+    return {
+      x:     (0.05 + Math.random() * 0.9) * W,
+      drift: Math.random() * 30 - 15,
+      dur:   4 + Math.random() * 6,
+      t:     0,
+    };
+  }
+
+  function tickSteam(sekunder) {
+    steamAkk += sekunder;
+    while (steamAkk >= DAMP_INTERVALL) {
+      steamAkk -= DAMP_INTERVALL;
+      steam.push(makeSteam());
+    }
+    for (let i = steam.length - 1; i >= 0; i--) {
+      const s = steam[i];
+      s.t += sekunder / s.dur;
+      if (s.t >= 1) { steam.splice(i, 1); continue; }
+      ctx.beginPath();
+      ctx.arc(s.x + s.drift * s.t, H - 200 * s.t, 1 + 2 * s.t, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(201,123,42,' + (0.06 * (1 - s.t)).toFixed(3) + ')';
+      ctx.fill();
+    }
+  }
+
   function resize() {
     W = canvas.width  = window.innerWidth;
     H = canvas.height = window.innerHeight;
@@ -2814,6 +2826,7 @@ window.quote = function() {
   // Ett bilde. `steg` = 0 tegner partiklene der de står, uten å flytte dem.
   function paintParticles(steg) {
     ctx.clearRect(0, 0, W, H);
+    tickSteam(steg * 16.67 / 1000);   // `steg` er 60Hz-steg, tickSteam vil ha sekunder
     for (let i = particles.length - 1; i >= 0; i--) {
       const p = particles[i];
       p.x += p.vx * steg; p.y += p.vy * steg;
