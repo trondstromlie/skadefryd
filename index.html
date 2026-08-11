@@ -1322,6 +1322,16 @@
 
   @media (prefers-reduced-motion: reduce) {
     .kiosk-glow { animation: none; }
+
+    /* Har du bedt operativsystemet om mindre bevegelse, skal siden være rolig.
+       Innholdet står stille i sin ferdige tilstand — ingenting blir borte,
+       fordi fade-inn-animasjonene bruker `forwards` og lander på sluttbildet.
+       Canvas-løkkene stopper seg selv, se REDUSERT_BEVEGELSE i skriptet. */
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 </style>
 <script>
@@ -2137,6 +2147,23 @@ if (window.__KIOSK__) (function () {
 if (!window.__KIOSK__) (function () {
 const _x0 = 'TmVpLg=='; // config
 
+/* Felles bremser for alt som tegner kontinuerlig.
+
+   Bakgrunnen: de to canvas-løkkene fulgte skjermens oppdateringsfrekvens. På en
+   120 Hz-skjerm ble det 120 bilder i sekundet i det uendelige — dobbelt arbeid av
+   en vanlig 60 Hz-skjerm, og regnet i matrix-øyet falt dobbelt så fort. Nå tegner
+   begge i ANIM_FPS, og bevegelsen regnes ut fra hvor lang tid som faktisk har
+   gått, slik at farten ser lik ut uansett skjerm. */
+const REDUSERT_BEVEGELSE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ANIM_FPS    = 30;
+const ANIM_MIN_MS = 1000 / ANIM_FPS;
+
+/* Hvor mange "60 Hz-steg" som har gått siden forrige tegning. Brukes til å gange
+   opp bevegelsen, slik at 30 tegnede bilder gir samme fart som 60 gjorde før. */
+function animSteg(gap) {
+  return Math.min(gap / 16.67, 4);   // taket hindrer et kjempehopp etter en pause
+}
+
 // Custom cursor
 const cursor = document.getElementById('cursor');
 document.addEventListener('mousemove', e => {
@@ -2385,6 +2412,9 @@ const canvas = document.getElementById('matrix-canvas');
 const ctx = canvas.getContext('2d');
 
 let matrixActive = false;
+let matrixOnScreen = true;   // er øyet innenfor synsfeltet akkurat nå?
+let matrixRunning = false;   // har vi allerede en løkke gående?
+let matrixLast = 0;
 let columns = [];
 const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF♦◊∞≈≠±×÷√∫∂∑∏';
 
@@ -2440,41 +2470,86 @@ function getEyeOpacity(x, y, w, h) {
   return 0.08; // Outside eye - subtle matrix rain
 }
 
-function drawMatrix() {
-  if (!matrixActive) return;
-  
-  ctx.fillStyle = 'rgba(26, 14, 6, 0.15)';
+/* Øyet er 50 piksler høyt og ligger helt nederst på en side som er over 5000
+   piksler lang. Det er altså ute av syne mesteparten av tiden — da er det ingen
+   grunn til å tegne det. */
+function matrixShouldRun() {
+  return matrixActive && matrixOnScreen && !document.hidden;
+}
+
+function startMatrix() {
+  if (matrixRunning || !matrixShouldRun()) return;
+  matrixRunning = true;
+  matrixLast = 0;
+  requestAnimationFrame(drawMatrix);
+}
+
+// Ett enkelt bilde. `steg` sier hvor mye regnet skal flytte seg.
+function paintMatrix(steg) {
+  // Sporet etter tegnene falmer like mye per tidsenhet uansett bildefrekvens.
+  ctx.fillStyle = `rgba(26, 14, 6, ${1 - Math.pow(0.85, steg)})`;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  
+
   ctx.font = '12px DM Mono, monospace';
-  
+
   columns.forEach(col => {
     const char = chars[Math.floor(Math.random() * chars.length)];
     const opacity = getEyeOpacity(col.x, col.y, canvas.width, canvas.height);
-    
+
     ctx.fillStyle = `rgba(201, 123, 42, ${opacity})`;
     ctx.fillText(char, col.x, col.y);
-    
-    col.y += col.speed * 3;
-    
+
+    col.y += col.speed * 3 * steg;
+
     if (col.y > canvas.height + 20) {
       col.y = Math.random() * -50;
       col.speed = 1 + Math.random() * 2;
     }
   });
-  
+}
+
+function drawMatrix(now) {
+  if (!matrixShouldRun()) { matrixRunning = false; return; }
   requestAnimationFrame(drawMatrix);
+
+  const gap = now - matrixLast;
+  if (matrixLast && gap < ANIM_MIN_MS) return;
+  const steg = matrixLast ? animSteg(gap) : 1;
+  matrixLast = now;
+
+  paintMatrix(steg);
 }
 
 // Start matrix automatically
 setTimeout(() => {
   initMatrix();
   matrixActive = true;
-  drawMatrix();
+
+  if (REDUSERT_BEVEGELSE) {
+    // Bygg opp øyet i ett jafs og la det stå stille.
+    for (let i = 0; i < 80; i++) paintMatrix(1);
+    return;
+  }
+
+  // Tegn bare når øyet faktisk er på skjermen, og bare når fanen er framme.
+  new IntersectionObserver(entries => {
+    matrixOnScreen = entries[0].isIntersecting;
+    startMatrix();
+  }).observe(bjarneEye);
+  document.addEventListener('visibilitychange', startMatrix);
+
+  startMatrix();
 }, 500);
 
+/* Å dra i vindusrammen sender rundt tjue signaler i sekundet, og hvert eneste
+   ett bygde hele rutenettet på nytt. Vent til brukeren har sluppet. */
+let matrixResizeTimer;
 window.addEventListener('resize', () => {
-  initMatrix();
+  clearTimeout(matrixResizeTimer);
+  matrixResizeTimer = setTimeout(() => {
+    initMatrix();
+    if (REDUSERT_BEVEGELSE) for (let i = 0; i < 80; i++) paintMatrix(1);
+  }, 150);
 });
 
 // Bjarne's heartbeat
@@ -2706,7 +2781,12 @@ window.quote = function() {
     H = canvas.height = window.innerHeight;
   }
   resize();
-  window.addEventListener('resize', () => { resize(); spawnParticles(); });
+  // Samme som for matrix: vent til vindusdragingen har roet seg.
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { resize(); spawnParticles(); paintParticles(0); }, 150);
+  });
 
   function spawnParticles() {
     particles = Array.from({ length: 60 }, () => makeParticle());
@@ -2731,11 +2811,12 @@ window.quote = function() {
     };
   }
 
-  function drawParticles() {
+  // Ett bilde. `steg` = 0 tegner partiklene der de står, uten å flytte dem.
+  function paintParticles(steg) {
     ctx.clearRect(0, 0, W, H);
     for (let i = particles.length - 1; i >= 0; i--) {
       const p = particles[i];
-      p.x += p.vx; p.y += p.vy;
+      p.x += p.vx * steg; p.y += p.vy * steg;
       if (p.y < -10 || p.x < -10 || p.x > W + 10) {
         particles[i] = makeParticle();
         particles[i].y = H + 5;
@@ -2747,11 +2828,37 @@ window.quote = function() {
       ctx.fillStyle = p.col;
       ctx.fill();
     }
+  }
+
+  let running = false, last = 0;
+
+  function startParticles() {
+    if (running || document.hidden) return;
+    running = true;
+    last = 0;
     requestAnimationFrame(drawParticles);
   }
 
+  function drawParticles(now) {
+    if (document.hidden) { running = false; return; }
+    requestAnimationFrame(drawParticles);
+
+    const gap = now - last;
+    if (last && gap < ANIM_MIN_MS) return;
+    const steg = last ? animSteg(gap) : 1;
+    last = now;
+
+    paintParticles(steg);
+  }
+
   spawnParticles();
-  drawParticles();
+
+  if (REDUSERT_BEVEGELSE) {
+    paintParticles(0);          // stjernehimmelen står stille
+  } else {
+    document.addEventListener('visibilitychange', startParticles);
+    startParticles();
+  }
 })();
 
 // =============================================
