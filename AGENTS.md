@@ -1053,6 +1053,21 @@ QR-kode til påmeldingsskjemaet. Ingenting annet.
 `index.html`, og lenken hentes fra påmeldingsknappen på forsiden. Endrer du den knappen,
 følger QR-koden etter av seg selv — det finnes ingen bildefil å huske på.
 
+Under «Skann med mobilen» står linja **«Kan bare åpnes i Edge på mobil»** med en liten
+Edge-logo. Grunnen: påmeldingsskjemaet ligger bak Gjensidiges pålogging, som avviser Safari
+og Chrome med en feilmelding folk ikke forstår. Det finnes ingen måte å tvinge én QR-kode
+til å åpne Edge på både iPhone og Android — teksten er derfor det eneste som gjør jobben.
+
+Linja er **bevisst holdt dempet**: grå, liten, uten ramme og uten bakgrunn. Prøvde vi den
+som en farget advarselsboks, ble hele kioskbildet bunntungt. Den skal leses som en fotnote,
+ikke som en overskrift.
+
+Logoen er Edge-logoen fra Simple Icons, limt inn som inline SVG — ingen bildefil, så
+kiosken virker uten nett. Den er **den eneste fargeflekken i linja**, med Edges blågrønne
+gradient. Grå ble den prøvd først, men så liten er Edge-logoen umulig å kjenne igjen uten
+fargene — den leses som en virvel, og folk gjettet på Chrome. Fargen er derfor et bevisst
+unntak fra ellers dempet linje.
+
 Skal du endre størrelsen på koden: den slutter å la seg skanne under ca. 150 px. Dagens
 `38vmin` gir rundt 410 px på en 1080p-skjerm, altså nesten tre ganger margin. Blir
 påmeldingslenken lengre, blir koden tettere og trenger mer plass.
