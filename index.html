@@ -1098,8 +1098,14 @@
     .info-cell { flex: 1 1 100%; min-width: unset; padding: 1rem 1.25rem; border-right: none; border-bottom: 1px solid var(--border); }
     .info-cell:last-child { border-bottom: none; }
 
-    /* Countdown */
-    .count-unit { padding: 1rem 1rem; }
+    /* Countdown: alle fire enhetene på én rad, ellers falt SEK ned for seg selv */
+    .countdown-section { padding: 3rem 1.25rem; }
+    .countdown-label { margin-bottom: 2rem; }
+    .countdown { flex-wrap: nowrap; }
+    .count-unit { flex: 1 1 0; min-width: 0; padding: 1.25rem 0.4rem; }
+    .count-num { font-size: clamp(2rem, 11vw, 3rem); }
+    .count-lbl { font-size: 8px; letter-spacing: 0.12em; }
+    .count-unit::after { font-size: 1.2rem; }
 
     /* Bjarne quote + prompt */
     .bjarne-quote-block { margin: 0 1.25rem 2rem; padding: 1.5rem; }
