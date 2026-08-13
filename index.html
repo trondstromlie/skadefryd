@@ -452,7 +452,7 @@
     box-shadow: 0 0 40px rgba(124,92,252,0.05);
   }
   .bjarne-quote-block::before {
-    content: 'F';
+    content: 'B';
     position: absolute; top: -14px; left: 2rem;
     background: var(--espresso);
     padding: 0 8px;
@@ -1081,7 +1081,14 @@
       letter-spacing: 0.08em;
       padding: 8px 12px;
     }
-    .critical-warning { top: 74px; font-size: 9px; }
+    /* Advarselen lå kant i kant med skjermen og falt ut av feltet når den brakk */
+    .critical-warning {
+      top: 74px; font-size: 9px;
+      letter-spacing: 0.12em;
+      height: auto; min-height: 22px;
+      padding: 5px 14px;
+      line-height: 1.4;
+    }
     .page { padding-top: 78px; }
 
     /* Coffee ring: shrink and pull to edge */
@@ -1098,8 +1105,14 @@
     .info-cell { flex: 1 1 100%; min-width: unset; padding: 1rem 1.25rem; border-right: none; border-bottom: 1px solid var(--border); }
     .info-cell:last-child { border-bottom: none; }
 
-    /* Countdown */
-    .count-unit { padding: 1rem 1rem; }
+    /* Countdown: alle fire enhetene på én rad, ellers falt SEK ned for seg selv */
+    .countdown-section { padding: 3rem 1.25rem; }
+    .countdown-label { margin-bottom: 2rem; }
+    .countdown { flex-wrap: nowrap; }
+    .count-unit { flex: 1 1 0; min-width: 0; padding: 1.25rem 0.4rem; }
+    .count-num { font-size: clamp(2rem, 11vw, 3rem); }
+    .count-lbl { font-size: 8px; letter-spacing: 0.12em; }
+    .count-unit::after { font-size: 1.2rem; }
 
     /* Bjarne quote + prompt */
     .bjarne-quote-block { margin: 0 1.25rem 2rem; padding: 1.5rem; }
@@ -1109,6 +1122,17 @@
     /* Prep + features */
     .prep-section > div { padding: 0 1.25rem 2rem !important; }
     .features-section { padding: 1.25rem; }
+
+    /* CTA: knappen brakk mellom kaffekoppen og teksten på mobil */
+    .cta-wrap { padding: 3rem 1.25rem; }
+    .cta-wrap.cta-wrap--bottom { padding: 3rem 1.25rem 2.5rem; }
+    .cta-btn {
+      max-width: 100%;
+      padding: 1.35rem 2.5rem;
+      font-size: 14px;
+      letter-spacing: 0.2em;
+      white-space: nowrap;
+    }
 
     /* RSVP */
     .rsvp-section { padding: 1.5rem 1.25rem 3rem; }
