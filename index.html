@@ -1489,7 +1489,7 @@
       <a class="cta-btn" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Ik4YgCwHDkSoqSL1K4JkbWgYaRqvzgtKqdvpMW9gIp5UNjlRTFNHVzFaU1Q0STlSMlo1UU5CMUNJOC4u" target="_blank">
         ☕ Meld deg på
       </a>
-      <span class="cta-sub">9. september · kl. 12:00</span>
+      <span class="cta-sub">23. september · kl. 12:00</span>
     </div>
   </div>
 
@@ -1510,7 +1510,7 @@
   <div class="info-row fade-up d3">
     <div class="info-cell">
       <div class="info-label">Dato</div>
-      <div class="info-value">9. september 2026</div>
+        <div class="info-value">23. september 2026</div>
     </div>
     <div class="info-cell">
       <div class="info-label">Kl</div>
@@ -1566,7 +1566,7 @@
     <div id="prompt-locked-view" class="prompt-locked">
       <div class="lock-icon">🔒</div>
       <p>Oppdraget er klassifisert</p>
-      <p class="unlock-time">Låses opp 9. september kl. 12:00</p>
+      <p class="unlock-time">Låses opp 23. september kl. 12:00</p>
       <p style="margin-top:16px; font-size:10px; opacity:0.3; letter-spacing:0.1em;">Bjarne vet nøyaktig hva som står der. Han skrev det selv, uoppfordret.</p>
     </div>
     <div id="prompt-revealed-view" class="prompt-revealed">
@@ -1686,7 +1686,7 @@
       <a class="cta-btn" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Ik4YgCwHDkSoqSL1K4JkbWgYaRqvzgtKqdvpMW9gIp5UNjlRTFNHVzFaU1Q0STlSMlo1UU5CMUNJOC4u" target="_blank">
         ☕ Meld deg på
       </a>
-      <span class="cta-sub">9. september · Bjarne venter</span>
+      <span class="cta-sub">23. september · Bjarne venter</span>
     </div>
   </div>
 
@@ -1729,7 +1729,7 @@
     <div class="kiosk-today">Det er i dag.</div>
 
     <div class="kiosk-meta">
-      <strong>9. september 2026</strong> &middot; kl. 12:00<br>
+      <strong>23. september 2026</strong> &middot; kl. 12:00<br>
       Itera &middot; Stortingsgata 6, Oslo
     </div>
   </div>
@@ -1773,7 +1773,7 @@ if (window.__KIOSK__) (function () {
     : 'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Ik4YgCwHDkSoqSL1K4JkbWgYaRqvzgtKqdvpMW9gIp5UNjlRTFNHVzFaU1Q0STlSMlo1UU5CMUNJOC4u';
 
   /* Samme tidspunkt som nedtellingen på forsiden. */
-  var TARGET = new Date('2026-09-09T12:00:00');
+    var TARGET = new Date('2026-09-23T12:00:00');
 
   /* Minimal QR-koder: byte-modus, versjon 1-10, feilkorreksjon L/M/Q/H. */
 
@@ -2234,7 +2234,7 @@ document.querySelectorAll('.feature-card, .count-unit, .info-cell').forEach(el =
    av sidens CPU-bruk. Utseendet er uendret. */
 
 // Countdown
-const target = new Date('2026-09-09T12:00:00');
+    const target = new Date('2026-09-23T12:00:00');
 function updateCountdown() {
   const now = new Date();
   const diff = target - now;
@@ -2276,7 +2276,7 @@ async function revealPrompt() {
       promptEl.textContent = 'Noe gikk galt. Bjarne skylder på kaffemaskinen.';
     }
   } else {
-    promptEl.textContent = 'Pent forsøk. Kom tilbake 9. september.';
+    promptEl.textContent = 'Pent forsøk. Kom tilbake 23. september.';
   }
 }
 setInterval(updateCountdown, 1000);
