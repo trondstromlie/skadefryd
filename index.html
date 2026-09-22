@@ -511,17 +511,67 @@
   .prompt-box {
     background: rgba(0,0,0,0.4);
     border: 1px solid rgba(124,92,252,0.15);
-    padding: 2.5rem;
+    padding: 3rem;
     font-size: 12px; line-height: 1.9;
     color: var(--cream); opacity: 0.85;
     white-space: pre-wrap;
     font-family: 'DM Mono', monospace;
-    max-height: 400px;
-    overflow-y: auto;
   }
-  .prompt-box::-webkit-scrollbar { width: 4px; }
-  .prompt-box::-webkit-scrollbar-track { background: transparent; }
-  .prompt-box::-webkit-scrollbar-thumb { background: var(--ai); opacity: 0.3; }
+  /* Når oppdraget er låst opp byttes pre-wrap-teksten ut med ekte HTML fra
+     assets/oppdrag.bin. .doc-*-reglene under gjelder bare den. */
+  .prompt-box.doc { white-space: normal; }
+  .prompt-box .doc-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.7rem, 4vw, 2.5rem);
+    line-height: 1.05; letter-spacing: 0.03em;
+    margin: 0 0 1.25rem;
+  }
+  .prompt-box .doc-lead {
+    color: var(--ai-light);
+    margin: 0 0 2.5rem; padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(124,92,252,0.15);
+  }
+  .prompt-box h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem; letter-spacing: 0.14em;
+    text-transform: uppercase; font-weight: normal;
+    color: var(--amber-light);
+    margin: 3rem 0 1rem;
+  }
+  .prompt-box h4 {
+    font-size: 10px; letter-spacing: 0.25em;
+    text-transform: uppercase; font-weight: normal;
+    color: var(--ai-light); opacity: 0.75;
+    margin: 2rem 0 0.9rem;
+  }
+  .prompt-box p { margin: 0 0 1.1rem; }
+  .prompt-box ul, .prompt-box ol { margin: 0 0 1.4rem; padding-left: 1.5rem; }
+  .prompt-box li { margin-bottom: 0.7rem; }
+  .prompt-box li::marker { color: var(--ai-light); }
+  .prompt-box .doc-krav > li::marker,
+  .prompt-box .doc-karing > li::marker { color: var(--amber-light); }
+  .prompt-box strong { font-weight: 500; }
+  .prompt-box .doc-inspirasjon strong { color: var(--amber-light); font-weight: normal; }
+  .prompt-box code {
+    color: var(--ai-light);
+    background: rgba(124,92,252,0.1);
+    padding: 1px 5px;
+    overflow-wrap: anywhere;
+  }
+  .prompt-box .doc-cmd {
+    border-left: 2px solid var(--ai);
+    background: rgba(124,92,252,0.06);
+    padding: 1rem 1.25rem;
+    margin: 0 0 1.4rem;
+    color: var(--ai-light);
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+  }
+  .prompt-box .doc-advarsel {
+    border-left: 2px solid var(--rust);
+    padding-left: 1.25rem;
+    color: var(--amber-light);
+  }
 
   /* PREP SECTION */
   .prep-grid {
@@ -1117,7 +1167,11 @@
     /* Bjarne quote + prompt */
     .bjarne-quote-block { margin: 0 1.25rem 2rem; padding: 1.5rem; }
     .prompt-section { margin: 0 1.25rem 2rem; }
-    .prompt-box { font-size: 11px; padding: 1.25rem; }
+    .prompt-box { font-size: 11px; padding: 1.5rem 1.25rem; }
+    .prompt-box .doc-lead { margin-bottom: 1.75rem; padding-bottom: 1.5rem; }
+    .prompt-box h3 { font-size: 1.1rem; margin-top: 2.25rem; }
+    .prompt-box ul, .prompt-box ol { padding-left: 1.1rem; }
+    .prompt-box .doc-cmd { padding: 0.9rem 1rem; }
 
     /* Prep + features */
     .prep-section > div { padding: 0 1.25rem 2rem !important; }
@@ -1275,17 +1329,49 @@
   }
   .kiosk-meta strong { color: var(--cream); font-weight: 500; }
 
-  /* Erstatter nedtellingen når klokka har passert. */
-  .kiosk-today {
+  /* Kiosken har tre tilstander gjennom dagen:
+     før kl. 12:00 → nedtelling og QR-kode til påmeldingen
+     kl. 12:00–20:00 (.started) → bildet av Bjarne, «hackathonet har startet»
+     etter kl. 20:00 (.ferdig)  → samme bilde, men Bjarne takker for seg.
+     Påmeldings-QR-en faller bort når hackathonet er i gang — den har gjort
+     jobben sin, og bildet trenger plassen. */
+  .kiosk-today, .kiosk-farvel {
     display: none;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3rem, 13vmin, 14rem);
-    line-height: 0.9;
+    font-size: clamp(2.2rem, 8.5vmin, 9rem);
+    line-height: 0.95;
     color: var(--amber-light);
-    margin-bottom: 4.5vmin;
+    margin-bottom: 0;
   }
-  html.kiosk.started .kiosk-countdown { display: none; }
+  .kiosk-farvel .accent { color: var(--cream); }
+
+  .kiosk-bilde {
+    display: none;
+    flex: 0 0 auto;
+    margin: 0;
+    width: min(52vw, 900px);
+    border-radius: 2vmin;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .kiosk-bilde img { width: 100%; height: auto; display: block; }
+
+  /* Eyebrowen sier «Bjarne teller ned», og tittelen sier det samme som
+     beskjeden under. Begge går ut når beskjeden overtar. */
+  html.kiosk.started .kiosk-eyebrow,
+  html.kiosk.started .kiosk-title,
+  html.kiosk.started .kiosk-countdown,
+  html.kiosk.started .kiosk-meta,
+  html.kiosk.started .kiosk-qr { display: none; }
   html.kiosk.started .kiosk-today { display: block; }
+  html.kiosk.started .kiosk-bilde { display: block; }
+  /* Uten nedtelling og QR blir kolonnen smal. Da skal teksten og bildet stå
+     samlet midt på skjermen, ikke presses ut i hver sin kant. */
+  html.kiosk.started #kiosk { justify-content: center; }
+  html.kiosk.started .kiosk-main { flex: 0 1 auto; }
+
+  html.kiosk.ferdig .kiosk-today { display: none; }
+  html.kiosk.ferdig .kiosk-farvel { display: block; }
 
   .kiosk-qr {
     flex: 0 0 auto;
@@ -1348,6 +1434,9 @@
     html.kiosk #kiosk { flex-direction: column; gap: 5vmin; text-align: center; }
     .kiosk-countdown { justify-content: center; }
     .kiosk-meta { text-align: center; }
+    /* Stående skjerm: bildet stables over teksten, og får hele bredden. */
+    html.kiosk.started #kiosk { flex-direction: column-reverse; }
+    .kiosk-bilde { width: 100%; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1726,13 +1815,21 @@
       <div><span class="kiosk-num" id="k-secs">--</span><div class="kiosk-label">Sek</div></div>
     </div>
 
-    <div class="kiosk-today">Det er i dag.</div>
+    <div class="kiosk-today">Hackathon<br><span class="accent">med Bjarne</span><br>har startet.</div>
+    <div class="kiosk-farvel">Takk for n&aring;.<br><span class="accent">Hilsen Bjarne</span></div>
 
     <div class="kiosk-meta">
       <strong>23. september 2026</strong> &middot; kl. 12:00<br>
       Itera &middot; Stortingsgata 6, Oslo
     </div>
   </div>
+
+  <!-- Vises fra kl. 12:00 og ut dagen, se .kiosk-bilde i stilarket. -->
+  <figure class="kiosk-bilde">
+    <!-- Ikke lazy: kioskskjermen skal ha bildet i cachen lenge før klokka 12,
+         også om nettet skulle falle ut i mellomtiden. -->
+    <img src="assets/bjarne-trekkspill.jpg" alt="Bjarne spiller trekkspill i en stue full av neonstreker">
+  </figure>
 
   <div class="kiosk-qr">
     <div class="kiosk-qr-card" id="kiosk-qr-card"></div>
@@ -1774,6 +1871,9 @@ if (window.__KIOSK__) (function () {
 
   /* Samme tidspunkt som nedtellingen på forsiden. */
     var TARGET = new Date('2026-09-23T12:00:00');
+
+  /* Når Bjarne takker for seg og skjermen roer seg ned for kvelden. */
+  var SLUTT = new Date('2026-09-23T20:00:00');
 
   /* Minimal QR-koder: byte-modus, versjon 1-10, feilkorreksjon L/M/Q/H. */
 
@@ -2166,9 +2266,11 @@ if (window.__KIOSK__) (function () {
   function pad(n) { return String(n).padStart(2, '0'); }
 
   function tick() {
-    var diff = TARGET - new Date();
+    var na = new Date();
+    var diff = TARGET - na;
     if (diff <= 0) {
       document.documentElement.classList.add('started');
+      if (na >= SLUTT) document.documentElement.classList.add('ferdig');
       return;
     }
     var secs = Math.floor(diff / 1000);
@@ -2263,17 +2365,34 @@ const _0x = 'UmlrdGlnIHZhcmlhYmVsLiBGZWlsIGlubmhvbGQuIE7DpnIsIG1lbiBuw6ZyIHRlbGx
 let _cached = null;
 fetch('assets/f.bin').then(r => r.text()).then(d => { _cached = d.trim(); });
 
+// Selve oppdraget. Ligger base64-encodet i assets/oppdrag.bin, ikke i klartekst her.
+let _oppdrag = null;
+fetch('assets/oppdrag.bin').then(r => r.text()).then(d => { _oppdrag = d.trim(); });
+
+function _dekod(b64) {
+  return new TextDecoder().decode(Uint8Array.from(atob(b64.trim()), c => c.charCodeAt(0)));
+}
+
+// updateCountdown kaller revealPrompt hvert sekund etter at måltidspunktet er passert.
+// Uten denne sperra ville dokumentet blitt tegnet på nytt en gang i sekundet.
+let _revealed = false;
+
 async function revealPrompt() {
+  if (_revealed) return;
+  _revealed = true;
+
   document.getElementById('prompt-locked-view').style.display = 'none';
   document.getElementById('prompt-revealed-view').classList.add('visible');
 
   const promptEl = document.getElementById('prompt-content');
   if (new Date() >= target) {
     try {
-      const d = _cached || await fetch('assets/f.bin').then(r => r.text());
-      promptEl.textContent = new TextDecoder().decode(Uint8Array.from(atob(d.trim()), c => c.charCodeAt(0)));
+      const d = _oppdrag || await fetch('assets/oppdrag.bin').then(r => r.text());
+      promptEl.innerHTML = _dekod(d);
+      promptEl.classList.add('doc');
     } catch (e) {
       promptEl.textContent = 'Noe gikk galt. Bjarne skylder på kaffemaskinen.';
+      _revealed = false;
     }
   } else {
     promptEl.textContent = 'Pent forsøk. Kom tilbake 23. september.';
