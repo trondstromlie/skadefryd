@@ -1051,8 +1051,24 @@ QR-kode til påmeldingsskjemaet. Ingenting annet.
 | Kl. 12:00–20:00 (`html.started`) | Bildet av Bjarne med trekkspill og «Hackathon med Bjarne har startet». Nedtelling, meta og QR faller bort — påmeldingen har gjort jobben sin |
 | Etter kl. 20:00 (`html.ferdig`) | Samme bilde, men teksten blir «Takk for nå. Hilsen Bjarne» |
 
+Skjermen bytter tilstand av seg selv, uten omlasting — klokka sjekkes hvert sekund.
+
 `SLUTT` står rett under `TARGET` i kioskskriptet. Flytter du datoen, må **begge**
 oppdateres — se [Datoen](#datoen).
+
+**Kiosken oppdaterer seg selv.** Hvert 2. minutt spør den serveren om selve fila har
+endret seg — en `HEAD`-forespørsel som sammenligner `etag` (eller `last-modified`).
+Er den lik, skjer det ingenting. Har den endret seg, tones skjermen ned, lastes på nytt og
+tones inn igjen. Ingen ser en side som laster, og ingen trenger å gå bort til skjermen
+etter at noe er lagt ut.
+
+- Merker du at en endring ikke dukker opp, vent noen minutter før du feilsøker. GitHub
+  Pages ligger bak en CDN, så det tar litt tid fra merge til fila faktisk er byttet ut.
+- `SPERRE_MS` hindrer at skjermen laster i ett sett hvis to servere skulle svare med hver
+  sin etag annenhver gang. Den står på fem minutter.
+- Ut- og innfadingen er `kiosk-ut` og `kiosk-inn` i stilarket. Endrer du `FADE_MS`, må
+  animasjonene endres i samme slengen.
+- Sjekken kjører bare i kioskmodus. Den vanlige forsiden gjør ingen slike kall.
 
 Bildet er **ikke** `loading="lazy"`. En kioskskjerm kan ha stått på i ukevis når klokka
 blir tolv, og skal ikke være avhengig av at nettet virker akkurat da.
