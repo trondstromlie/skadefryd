@@ -166,7 +166,7 @@ kaffeknapp, sitater.
 ## Metode 2 — lokal webserver (når du trenger den ekte greia)
 
 Noen ting virker ikke over `file://` fordi nettleseren blokkerer dem av
-sikkerhetsgrunner — først og fremst `fetch()` av `assets/f.bin` (oppdragspromptet), og
+sikkerhetsgrunner — først og fremst `fetch()` av `assets/oppdrag.bin` (oppgaveteksten), og
 `localStorage` oppfører seg annerledes. Trenger du det, start en liten server:
 
 ```bash
@@ -986,7 +986,7 @@ echo ".DS_Store" >> .gitignore
 # Hva dette repoet er
 
 Hackathon-landingssiden for **Skadefryd med Bjarne** — et internt arrangement i Gjensidige
-Skade, **9. september 2026 kl. 12:00 hos Itera** (Stortingsgata 6, Oslo).
+Skade, **23. september 2026 kl. 12:00 hos Itera** (Stortingsgata 6, Oslo).
 
 | | |
 |---|---|
@@ -1029,7 +1029,8 @@ i kopien; bruk dem gjerne i nye sitater for å holde sjalusi-twisten synlig.
 | Del | Hva den gjør |
 |-----|--------------|
 | **Energimåler** (fast topplinje) | Bjarnes energinivå 0–100, tømmes 1 poeng hvert 8. sekund. Knappen «☕ Gi Bjarne en kaffe før han sovner» gir +25. Under 20: rød pulserende advarsel. På 0 tar en Windows-BSOD over hele skjermen (`CAFFEINE_LEVEL_CRITICAL`) med restart-knapp som gir 60. Lagres i `localStorage` (`bjarne_energy`, `bjarne_energy_ts`) |
-| **Nedtelling** | Teller ned til 9. september 2026 kl. 12:00 (`index.html` er fasit, se [Datoen](#datoen)). Når målet nås åpnes den låste «oppdrag»-seksjonen automatisk |
+| **Nedtelling** | Teller ned til 23. september 2026 kl. 12:00 (`index.html` er fasit, se [Datoen](#datoen)). Når målet nås åpnes den låste «oppdrag»-seksjonen automatisk |
+| **Oppdraget** | Låst boks fram til nedtellingen er ferdig. Da byttes den ut med hele oppgaveteksten, hentet fra `assets/oppdrag.bin`, se [Oppdraget](#oppdraget) |
 | **Bjarne-sitater** | 18 sitater roterer hvert 6. sekund med fade. Kaffe (hovedvekt), hackathonet, AI-selvbilde, og — uten å forklare det — avvisningen av samarbeid og teorien om hvorfor han ikke ble valgt |
 | **Forberedelser** | Tilgang til genai.gjensidige.no (valgfritt, krever `az login`), OpenCode (anbefalt verktøy), kontakt Trond eller Ulrik, andre verktøy (VS Code, Cursor, Azure CLI, Node, Python) |
 | **Features-grid** | 7 fiktive AI-features Bjarne aldri ble bedt om å bygge: Kaffekorrelasjon™, Sukk-detektor, Unngåelsesindeks, Bjarne spår fremtiden, Effektivitetsrapporten, Kaffekritisk varsel, Kjendis-tracker (teller omtaler av Eva/Sofie/Frank mot Bjarnes eget tall) |
@@ -1040,6 +1041,21 @@ i kopien; bruk dem gjerne i nye sitater for å holde sjalusi-twisten synlig.
 Legg `?kiosk=true` bak adressen — `https://skadefryd.tech/?kiosk=true` — så bytter siden til
 en visning laget for en skjerm som henger på veggen: stor nedtelling, dato og sted, og en
 QR-kode til påmeldingsskjemaet. Ingenting annet.
+
+**Kiosken har tre tilstander gjennom dagen**, styrt av to klokkeslett i kioskskriptet
+(`TARGET` og `SLUTT`):
+
+| Når | Hva skjermen viser |
+|-----|--------------------|
+| Før kl. 12:00 | Nedtelling, dato og sted, og QR-koden til påmeldingen |
+| Kl. 12:00–20:00 (`html.started`) | Bildet av Bjarne med trekkspill og «Hackathon med Bjarne har startet». Nedtelling, meta og QR faller bort — påmeldingen har gjort jobben sin |
+| Etter kl. 20:00 (`html.ferdig`) | Samme bilde, men teksten blir «Takk for nå. Hilsen Bjarne» |
+
+`SLUTT` står rett under `TARGET` i kioskskriptet. Flytter du datoen, må **begge**
+oppdateres — se [Datoen](#datoen).
+
+Bildet er **ikke** `loading="lazy"`. En kioskskjerm kan ha stått på i ukevis når klokka
+blir tolv, og skal ikke være avhengig av at nettet virker akkurat da.
 
 - Den vanlige forsiden skjules med CSS (`html.kiosk body > *:not(#kiosk)`), og hele
   hovedskriptet hoppes over. Ingen energimåler, ingen partikler, ingen canvas som tegner —
@@ -1093,7 +1109,9 @@ påmeldingslenken lengre, blir koden tettere og trenger mer plass.
 | Fil | Hva det er |
 |-----|-----------|
 | `index.html` | **Hele siden.** HTML, CSS og JavaScript i samme fil, ~1450 linjer |
+| `assets/oppdrag.bin` | **Selve oppdraget**, base64-encodet HTML. Vises når nedtellingen er ferdig, se [Oppdraget](#oppdraget) |
 | `assets/f.bin` | Base64-encodet påskeegg-melding til den som graver den frem |
+| `assets/bjarne-trekkspill.jpg` | Bildet kiosken viser fra kl. 12:00 på selve dagen |
 | `CNAME` | Domenet (`skadefryd.tech`). **Slettes aldri** — da faller domenet ned |
 | `AGENTS.md` | **Denne fila — eneste kilde til sannhet.** Alt om prosjektet står her |
 | `CLAUDE.md` | Bare en peker hit. Ikke dupliser innhold dit |
@@ -1126,8 +1144,10 @@ Bruk Claude in Chrome eller Playwright, åpne siden, og sjekk:
 | 2 | Endringen er faktisk synlig | Redigerte du riktig sted i fila? |
 | 3 | **375px bredde: ingen horisontal scrolling** | Den historisk vanligste feilen her |
 | 4 | Kaffeknappen gir +25 energi | Kjernefunksjonen |
-| 5 | Nedtellingen viser riktig tall | Målet er `2026-09-09T12:00:00` |
+| 5 | Nedtellingen viser riktig tall | Målet er `2026-09-23T12:00:00` |
 | 6 | Sitatene roterer | 18 sitater, bytte hvert 6. sekund |
+| 7 | Oppdraget vises når datoen er passert | Test med en midlertidig dato, se under |
+| 8 | Kiosken bytter tilstand riktig | `?kiosk=true` med midlertidig dato: bilde + «har startet», og «Takk for nå» etter kl. 20 |
 
 **Ta skjermbilde og se på det med Read-verktøyet.** Et skjermbilde du ikke har åpnet er
 ikke en sjekk.
@@ -1154,7 +1174,7 @@ location.reload();
 ```
 
 **Vil du teste BSOD-en** (skjer på 0 energi), sett energien lavt manuelt i stedet for å
-vente. Og **vil du teste hva som skjer etter 9. september**, endre `target`-datoen
+vente. Og **vil du teste hva som skjer etter 23. september**, endre `target`-datoen
 midlertidig — men **husk å sette den tilbake før commit.** En feil dato som går live er
 den mest synlige feilen dette repoet kan få.
 
@@ -1185,15 +1205,37 @@ i kanten (dekorasjon, ikon, absolutt posisjonert element), **sjekk 375px før du
 sarkastiske Bjarne-meldinger. De er lagt inn med vilje, for nysgjerrige som inspiserer
 kilden. **Ikke fjern dem, ikke «forenkle» dem, ikke forklar dem i en kommentar.**
 
-`assets/f.bin` inneholder ikke lenger det ekte oppdragspromptet, men en påskeegg-melding
-til den som klarer å dekode den. Den dekodes også automatisk når datoen er passert.
+`assets/f.bin` er en påskeegg-melding til den som klarer å dekode den. Den hentes fortsatt
+i `index.html`, og det er **med vilje** — det er brødsmula som gjør egget mulig å finne.
+Ikke rydd bort fetch-en fordi den ser ubrukt ut.
+
+### Oppdraget
+
+Oppgaveteksten ligger base64-encodet i `assets/oppdrag.bin`, ikke i klartekst i
+`index.html`. Den hentes og vises først når nedtellingen er ferdig; prøver noen før den
+tid, får de «Pent forsøk. Kom tilbake 23. september.» Innholdet er en HTML-bit som legges
+inn med `innerHTML` og formateres av `.doc-*`-reglene i stilarket.
+
+Base64 er **innpakning, ikke sikkerhet.** Alle som vil, kan hente fila og dekode den —
+poenget er bare at teksten ikke står og lyser i kildekoden før dagen. Legg derfor aldri
+noe der som faktisk må være hemmelig.
+
+Slik endrer du teksten:
+
+```bash
+base64 -D assets/oppdrag.bin > /tmp/oppdrag.html    # pakk ut
+# rediger /tmp/oppdrag.html
+base64 -i /tmp/oppdrag.html | tr -d '\n' > assets/oppdrag.bin   # pakk inn igjen
+```
+
 **Ikke lim innholdet inn i klartekst i `index.html`.**
 
 ### Datoen
 
-Fasiten er `index.html`, linje ~1045: `new Date('2026-09-09T12:00:00')`, og datoteksten
+Fasiten er `index.html`, linje ~1045: `new Date('2026-09-23T12:00:00')`, og datoteksten
 lenger opp i dokumentet. Endres datoen, må **begge** oppdateres — nedtellingen og den
-synlige teksten er to forskjellige steder. Datoen står også i
+synlige teksten er to forskjellige steder. Kioskskriptet har sitt eget par,
+`TARGET` og `SLUTT` (kl. 20:00 samme dag) — begge må flyttes med. Datoen står også i
 [Hva dette repoet er](#hva-dette-repoet-er) her i AGENTS.md; oppdater den i samme PR.
 
 ### Energimåler-layouten
