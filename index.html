@@ -1430,6 +1430,14 @@
   }
 
   /* Stående eller smale skjermer: still opp under hverandre. */
+  /* Kiosken henter seg selv på nytt når det er lagt ut en ny versjon, se
+     sjekkNyVersjon() i kioskskriptet. Bildet tones ut og inn igjen, slik at
+     byttet leses som noe vi har bestemt — ikke som en side som laster. */
+  html.kiosk #kiosk { animation: kiosk-inn 0.6s ease both; }
+  html.kiosk.bytter #kiosk { animation: kiosk-ut 0.6s ease forwards; }
+  @keyframes kiosk-inn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes kiosk-ut  { from { opacity: 1; } to { opacity: 0; } }
+
   @media (max-aspect-ratio: 1/1) {
     html.kiosk #kiosk { flex-direction: column; gap: 5vmin; text-align: center; }
     .kiosk-countdown { justify-content: center; }
@@ -2282,6 +2290,52 @@ if (window.__KIOSK__) (function () {
 
   tick();
   setInterval(tick, 1000);
+
+  /* Skjermen henger på veggen i ukevis, og ingen står klar til å trykke
+     oppdater når vi legger ut noe nytt. Derfor spør den med jevne mellomrom
+     om selve fila har endret seg, og laster bare på nytt når den har det.
+     Er ingenting endret, skjer det ingenting — skjermen står helt rolig.
+
+     Vi sammenligner etag-en (GitHub Pages gir oss en), og faller tilbake på
+     last-modified om den skulle mangle. Ingen av delene laster ned sida. */
+  var VERSJONSINTERVALL = 2 * 60 * 1000;   // hvor ofte vi spør
+  var FADE_MS           = 600;             // må stemme med kiosk-ut i stilarket
+  var SPERRE_MS         = 5 * 60 * 1000;   // minste tid mellom to omlastinger
+  var kjentVersjon = null;
+
+  function sjekkNyVersjon() {
+    fetch(location.pathname + '?v=' + Date.now(), { method: 'HEAD', cache: 'no-store' })
+      .then(function (svar) {
+        if (!svar.ok) return;
+        var versjon = svar.headers.get('etag') || svar.headers.get('last-modified');
+        if (!versjon) return;
+        if (kjentVersjon === null) { kjentVersjon = versjon; return; }
+        if (versjon !== kjentVersjon) hentNyVersjon();
+      })
+      .catch(function () {
+        /* Nettet er borte, eller vi kjører fra fil. Prøv igjen om to minutter. */
+      });
+  }
+
+  /* Sperre mot omlastingskarusell: skulle to servere svare med hver sin etag
+     annenhver gang, ville skjermen ellers lastet på nytt i ett sett. */
+  function nyligLastet() {
+    try {
+      return Date.now() - Number(sessionStorage.getItem('kiosk_lastet') || 0) < SPERRE_MS;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function hentNyVersjon() {
+    if (nyligLastet()) return;
+    try { sessionStorage.setItem('kiosk_lastet', String(Date.now())); } catch (e) {}
+    document.documentElement.classList.add('bytter');
+    setTimeout(function () { location.reload(); }, FADE_MS);
+  }
+
+  setInterval(sjekkNyVersjon, VERSJONSINTERVALL);
+  sjekkNyVersjon();
 
   /* Musepekeren er skjult på en skjerm som står for seg selv, men skal
      komme fram med én gang noen beveger musen — og forsvinne igjen etterpå. */
